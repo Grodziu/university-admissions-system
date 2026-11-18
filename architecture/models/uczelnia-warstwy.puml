@@ -1,0 +1,49 @@
+@startuml
+!include <archimate/Archimate>
+title Uczelnia — trzy poziomy architektury
+top to bottom direction
+rectangle "Poziom biznesowy" #FFFDEE {
+Business_Actor(candidate,"Kandydat")
+Business_Role(committee,"Komisja rekrutacyjna")
+Business_Role(dean,"Dziekanat")
+Business_Service(admission_service,"Usługa przyjęcia na studia")
+Business_Service(study_service,"Obsługa toku studiów [projekt]")
+Business_Process(admission_process,"Zgłoszenie / weryfikacja / kwalifikacja / przyjęcie")
+Business_Process(study_process,"Wpis na semestr / zajęcia / dyplom [projekt]")
+Business_Object(application_object,"Zgłoszenie i decyzja")
+}
+rectangle "Poziom aplikacji" #ECFAFF {
+Application_Component(admission_app,"Rekrutacja — wdrożona")
+Application_Component(study_app,"Dziekanat / dydaktyka [projekt]")
+Application_Component(university_apps,"LMS, biblioteka, finanse, kadry, badania [projekt]")
+Application_Service(admission_api,"Obsługa zgłoszeń i publikacji")
+Application_Interface(api,"API HTTP/HTTPS")
+Application_Service(import_service,"Import przyjętych [projekt]")
+}
+rectangle "Poziom technologiczny" #EFFFEF {
+Technology_Node(server,"Serwer jednej uczelni")
+Technology_SystemSoftware(runtime,"Python / Django / serwer HTTPS")
+Technology_SystemSoftware(database,"PostgreSQL")
+Technology_Service(storage,"Transakcje i przechowywanie")
+Technology_Service(backup,"Kopia i odtworzenie")
+}
+Rel_Serving(admission_service,candidate,"")
+Rel_Assignment(committee,admission_process,"")
+Rel_Assignment(dean,study_process,"")
+Rel_Realization(admission_process,admission_service,"")
+Rel_Realization(study_process,study_service,"")
+Rel_Access(admission_process,application_object,"")
+Rel_Flow(admission_process,study_process,"Przyjęci: dziś CSV")
+Rel_Assignment(admission_app,admission_api,"")
+Rel_Assignment(api,admission_api,"")
+Rel_Serving_Up(admission_api,admission_process,"")
+Rel_Assignment(study_app,import_service,"")
+Rel_Serving_Up(import_service,study_process,"")
+Rel_Association(study_app,university_apps,"Kontrakty domen [projekt]")
+Rel_Composition(server,runtime,"")
+Rel_Composition(server,database,"")
+Rel_Realization(database,storage,"")
+Rel_Serving_Up(storage,admission_app,"")
+Rel_Association(backup,database,"pg_dump / pg_restore + dokumenty")
+Rel_Serving_Up(runtime,admission_app,"")
+@enduml

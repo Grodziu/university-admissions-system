@@ -1,0 +1,339 @@
+@startuml
+hide methods
+skinparam classAttributeIconSize 0
+left to right direction
+title Rzeczywiste klasy modelu Django — atrybuty i związki
+class User_groups {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  group: ForeignKey
+}
+User "1" -- "0..*" User_groups : user
+Group "1" -- "0..*" User_groups : group
+class User_user_permissions {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  permission: ForeignKey
+}
+User "1" -- "0..*" User_user_permissions : user
+Permission "1" -- "0..*" User_user_permissions : permission
+class User {
+  id: BigAutoField <<PK>>
+  password: CharField
+  last_login: DateTimeField <<optional>>
+  is_superuser: BooleanField
+  username: CharField
+  first_name: CharField
+  last_name: CharField
+  is_staff: BooleanField
+  is_active: BooleanField
+  date_joined: DateTimeField
+  email: CharField
+  role: CharField
+  recovery_hash: CharField
+  totp_secret: CharField
+  totp_pending: CharField
+  totp_last_step: BigIntegerField
+  is_demo: BooleanField
+}
+class Session {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  key_hash: CharField
+  expires_at: DateTimeField
+}
+User "1" -- "0..*" Session : user
+class CandidateContact {
+  user: OneToOneField <<PK>>
+  phone: CharField
+  portfolio_url: CharField
+  notification_email: CharField
+}
+User "1" -- "0..1" CandidateContact : user
+class ContactAnchor {
+  user: OneToOneField <<PK>>
+}
+User "1" -- "0..1" ContactAnchor : user
+class CandidatePhone {
+  contact: OneToOneField <<PK>>
+  value: CharField
+}
+ContactAnchor "1" -- "0..1" CandidatePhone : contact
+class CandidatePortfolio {
+  contact: OneToOneField <<PK>>
+  value: CharField
+}
+ContactAnchor "1" -- "0..1" CandidatePortfolio : contact
+class CandidateNotificationAddress {
+  contact: OneToOneField <<PK>>
+  value: CharField
+}
+ContactAnchor "1" -- "0..1" CandidateNotificationAddress : contact
+class CandidateIdentity {
+  user: OneToOneField <<PK>>
+  pesel: CharField
+}
+User "1" -- "0..1" CandidateIdentity : user
+class Residence {
+  user: OneToOneField <<PK>>
+  city: CharField
+  street: CharField
+  building: CharField
+  apartment: CharField
+  postal_code: CharField
+  latitude: DecimalField <<optional>>
+  longitude: DecimalField <<optional>>
+}
+User "1" -- "0..1" Residence : user
+class ProfilePhoto {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  version: PositiveIntegerField
+  file: FileField
+  original_name: CharField
+  sha256: CharField
+  uploaded_at: DateTimeField
+  approved_at: DateTimeField <<optional>>
+  approved_by: ForeignKey <<optional>>
+}
+User "1" -- "0..*" ProfilePhoto : user
+User "0..1" -- "0..*" ProfilePhoto : approved_by
+class ProfileDocument {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  kind: CharField
+  version: PositiveIntegerField
+  file: FileField
+  original_name: CharField
+  sha256: CharField
+  uploaded_at: DateTimeField
+}
+User "1" -- "0..*" ProfileDocument : user
+class AcademicAverage {
+  user: OneToOneField <<PK>>
+  value: DecimalField
+}
+User "1" -- "0..1" AcademicAverage : user
+class Diploma {
+  user: OneToOneField <<PK>>
+  title: CharField
+}
+User "1" -- "0..1" Diploma : user
+class ExamResult {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  subject: CharField
+  level: CharField
+  value: DecimalField
+}
+User "1" -- "0..*" ExamResult : user
+class Faculty {
+  id: BigAutoField <<PK>>
+  code: CharField
+  name: CharField
+  color: CharField
+}
+class Program_partner_faculties {
+  id: BigAutoField <<PK>>
+  program: ForeignKey
+  faculty: ForeignKey
+}
+Program "1" -- "0..*" Program_partner_faculties : program
+Faculty "1" -- "0..*" Program_partner_faculties : faculty
+class Program {
+  id: BigAutoField <<PK>>
+  name: CharField
+  faculty: ForeignKey
+  description: TextField
+  source: CharField
+  illustrative: BooleanField
+}
+Faculty "1" -- "0..*" Program : faculty
+class Campaign {
+  id: BigAutoField <<PK>>
+  name: CharField
+  start: DateTimeField
+  end: DateTimeField
+  demo_clock: DateTimeField <<optional>>
+  closed: BooleanField
+  demo_scenario: CharField
+}
+class Round {
+  id: BigAutoField <<PK>>
+  campaign: ForeignKey
+  degree: CharField
+  number: PositiveSmallIntegerField
+  start: DateTimeField
+  application_end: DateTimeField
+  end: DateTimeField
+}
+Campaign "1" -- "0..*" Round : campaign
+class Offer {
+  id: BigAutoField <<PK>>
+  campaign: ForeignKey
+  program: ForeignKey
+  degree: CharField
+  mode: CharField
+  capacity: PositiveIntegerField
+  minimum: PositiveIntegerField
+  fee: DecimalField
+  tuition_per_semester: DecimalField <<optional>>
+  portfolio_required: BooleanField
+  portfolio_bonus: BooleanField
+  photo_required: BooleanField
+  state: CharField
+  rule_version: CharField
+}
+Campaign "1" -- "0..*" Offer : campaign
+Program "1" -- "0..*" Offer : program
+class AllowedSubject {
+  id: BigAutoField <<PK>>
+  offer: ForeignKey
+  subject: CharField
+}
+Offer "1" -- "0..*" AllowedSubject : offer
+class AllowedProfession {
+  id: BigAutoField <<PK>>
+  offer: ForeignKey
+  name: CharField
+}
+Offer "1" -- "0..*" AllowedProfession : offer
+class Application {
+  id: BigAutoField <<PK>>
+  public_id: UUIDField
+  candidate: ForeignKey
+  offer: ForeignKey
+  round: ForeignKey
+  status: CharField
+  created_at: DateTimeField
+  submitted_at: DateTimeField <<optional>>
+  revision: PositiveIntegerField
+  input_snapshot: JSONField
+  feedback: TextField
+  bonus_claimed: BooleanField
+  bonus_approved: BooleanField
+  bonus_points: PositiveSmallIntegerField
+  bonus_category: CharField
+  oath_photo: ForeignKey <<optional>>
+  sworn_at: DateTimeField <<optional>>
+  student_number: CharField <<optional>>
+  portfolio_grade: CharField
+  payment_approved: BooleanField
+  payment_amount: DecimalField <<optional>>
+  portfolio_url: CharField
+  reviewed_by: ForeignKey <<optional>>
+}
+User "1" -- "0..*" Application : candidate
+Offer "1" -- "0..*" Application : offer
+Round "1" -- "0..*" Application : round
+ProfilePhoto "0..1" -- "0..*" Application : oath_photo
+User "0..1" -- "0..*" Application : reviewed_by
+class Document {
+  id: BigAutoField <<PK>>
+  application: ForeignKey
+  kind: CharField
+  reused_from: ForeignKey <<optional>>
+  profile_source: ForeignKey <<optional>>
+  revision: PositiveIntegerField
+  file: FileField
+  original_name: CharField
+  sha256: CharField
+  uploaded_at: DateTimeField
+}
+Application "1" -- "0..*" Document : application
+Document "0..1" -- "0..*" Document : reused_from
+ProfileDocument "0..1" -- "0..*" Document : profile_source
+class Publication {
+  id: BigAutoField <<PK>>
+  offer: ForeignKey
+  round: ForeignKey
+  version: PositiveIntegerField
+  published_at: DateTimeField
+  author: ForeignKey
+  reason: TextField
+  cutoff: DecimalField <<optional>>
+  qualified_count: PositiveIntegerField
+  available_places: PositiveIntegerField
+  overflow: PositiveIntegerField
+  rule: JSONField
+}
+Offer "1" -- "0..*" Publication : offer
+Round "1" -- "0..*" Publication : round
+User "1" -- "0..*" Publication : author
+class RankingEntry {
+  id: BigAutoField <<PK>>
+  publication: ForeignKey
+  application: ForeignKey
+  rank: PositiveIntegerField
+  score: DecimalField <<optional>>
+  decision: CharField
+  explanation: JSONField
+}
+Publication "1" -- "0..*" RankingEntry : publication
+Application "1" -- "0..*" RankingEntry : application
+class Notification {
+  id: BigAutoField <<PK>>
+  user: ForeignKey
+  title: CharField
+  message: TextField
+  created_at: DateTimeField
+  read: BooleanField
+}
+User "1" -- "0..*" Notification : user
+class EmailDelivery {
+  id: BigAutoField <<PK>>
+  notification: OneToOneField
+  recipient: CharField
+  state: CharField
+  attempts: PositiveSmallIntegerField
+  available_at: DateTimeField
+}
+Notification "1" -- "0..1" EmailDelivery : notification
+class Dormitory {
+  code: CharField <<PK>>
+  name: CharField
+  address: CharField
+  description: TextField
+  seats: PositiveSmallIntegerField
+  latitude: DecimalField
+  longitude: DecimalField
+}
+class HousingApplication {
+  id: BigAutoField <<PK>>
+  candidate: ForeignKey
+  campaign: ForeignKey
+  preferred: ForeignKey
+  allocated: ForeignKey <<optional>>
+  enrollment: ForeignKey <<optional>>
+  status: CharField
+  distance_km: DecimalField
+  score_index: DecimalField <<optional>>
+  submitted_at: DateTimeField
+}
+User "1" -- "0..*" HousingApplication : candidate
+Campaign "1" -- "0..*" HousingApplication : campaign
+Dormitory "1" -- "0..*" HousingApplication : preferred
+Dormitory "0..1" -- "0..*" HousingApplication : allocated
+Application "0..1" -- "0..*" HousingApplication : enrollment
+class AuditEvent {
+  id: BigAutoField <<PK>>
+  actor: ForeignKey <<optional>>
+  action: CharField
+  entity: CharField
+  details: JSONField
+  created_at: DateTimeField
+}
+User "0..1" -- "0..*" AuditEvent : actor
+class OfferStats {
+  offer: OneToOneField <<PK>>
+  applications: BigIntegerField
+  verified: BigIntegerField
+  confirmed: BigIntegerField
+}
+Offer "1" -- "0..1" OfferStats : offer
+note as N
+CandidateContact = widok zgodności.
+ContactAnchor + trzy fakty = fizyczna dekompozycja 6NF.
+OfferStats = projekcja utrzymywana przez wyzwalacz.
+end note
+@enduml

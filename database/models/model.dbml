@@ -1,0 +1,486 @@
+// Aktualny model fizyczny. Kontakt jest osobnym widokiem zgodności.
+
+Table admissions_academicaverage {
+  user_id "bigint" [pk, not null]
+  value "numeric(4,2)" [not null]
+}
+
+Ref: admissions_user.id - admissions_academicaverage.user_id
+Table admissions_allowedprofession {
+  id "bigint" [pk, not null]
+  name "character varying(80)" [not null]
+  offer_id "bigint" [not null]
+  indexes {
+    (offer_id, name) [unique]
+  }
+}
+
+Ref: admissions_allowedprofession.offer_id > admissions_offer.id
+Table admissions_allowedsubject {
+  id "bigint" [pk, not null]
+  subject "character varying(80)" [not null]
+  offer_id "bigint" [not null]
+  indexes {
+    (offer_id, subject) [unique]
+  }
+}
+
+Ref: admissions_allowedsubject.offer_id > admissions_offer.id
+Table admissions_application {
+  id "bigint" [pk, not null]
+  public_id "uuid" [not null]
+  status "character varying(12)" [not null]
+  created_at "timestamp with time zone" [not null]
+  submitted_at "timestamp with time zone"
+  revision "integer" [not null]
+  input_snapshot "jsonb" [not null]
+  feedback "text" [not null]
+  bonus_claimed "boolean" [not null]
+  bonus_approved "boolean" [not null]
+  portfolio_grade "character varying(12)" [not null]
+  payment_approved "boolean" [not null]
+  payment_amount "numeric(8,2)"
+  portfolio_url "character varying(500)" [not null]
+  candidate_id "bigint" [not null]
+  reviewed_by_id "bigint"
+  offer_id "bigint" [not null]
+  round_id "bigint" [not null]
+  bonus_category "character varying(40)" [not null]
+  bonus_points "smallint" [not null]
+  student_number "character varying(40)"
+  sworn_at "timestamp with time zone"
+  oath_photo_id "bigint"
+  indexes {
+    (public_id) [unique]
+    (student_number) [unique]
+    (candidate_id, offer_id) [unique]
+  }
+}
+
+Ref: admissions_application.candidate_id > admissions_user.id
+Ref: admissions_application.oath_photo_id > admissions_profilephoto.id
+Ref: admissions_application.reviewed_by_id > admissions_user.id
+Ref: admissions_application.offer_id > admissions_offer.id
+Ref: admissions_application.round_id > admissions_round.id
+Table admissions_auditevent {
+  id "bigint" [pk, not null]
+  action "character varying(80)" [not null]
+  entity "character varying(120)" [not null]
+  details "jsonb" [not null]
+  created_at "timestamp with time zone" [not null]
+  actor_id "bigint"
+}
+
+Ref: admissions_auditevent.actor_id > admissions_user.id
+Table admissions_campaign {
+  id "bigint" [pk, not null]
+  name "character varying(100)" [not null]
+  start "timestamp with time zone" [not null]
+  end "timestamp with time zone" [not null]
+  demo_clock "timestamp with time zone"
+  closed "boolean" [not null]
+  demo_scenario "character varying(40)" [not null]
+}
+
+Table admissions_candidateidentity {
+  user_id "bigint" [pk, not null]
+  pesel "character varying(11)" [not null]
+  indexes {
+    (pesel) [unique]
+  }
+}
+
+Ref: admissions_user.id - admissions_candidateidentity.user_id
+Table admissions_candidatenotificationaddress {
+  user_id "bigint" [pk, not null]
+  value "character varying(254)" [not null]
+}
+
+Ref: admissions_contactanchor.user_id - admissions_candidatenotificationaddress.user_id
+Table admissions_candidatephone {
+  user_id "bigint" [pk, not null]
+  value "character varying(30)" [not null]
+}
+
+Ref: admissions_contactanchor.user_id - admissions_candidatephone.user_id
+Table admissions_candidateportfolio {
+  user_id "bigint" [pk, not null]
+  value "character varying(500)" [not null]
+}
+
+Ref: admissions_contactanchor.user_id - admissions_candidateportfolio.user_id
+Table admissions_contactanchor {
+  user_id "bigint" [pk, not null]
+}
+
+Ref: admissions_user.id - admissions_contactanchor.user_id
+Table admissions_diploma {
+  user_id "bigint" [pk, not null]
+  title "character varying(120)" [not null]
+}
+
+Ref: admissions_user.id - admissions_diploma.user_id
+Table admissions_document {
+  id "bigint" [pk, not null]
+  kind "character varying(16)" [not null]
+  revision "integer" [not null]
+  file "character varying(100)" [not null]
+  original_name "character varying(200)" [not null]
+  sha256 "character varying(64)" [not null]
+  uploaded_at "timestamp with time zone" [not null]
+  application_id "bigint" [not null]
+  reused_from_id "bigint"
+  profile_source_id "bigint"
+  indexes {
+    (application_id, kind, revision) [unique]
+  }
+}
+
+Ref: admissions_document.application_id > admissions_application.id
+Ref: admissions_document.profile_source_id > admissions_profiledocument.id
+Ref: admissions_document.reused_from_id > admissions_document.id
+Table admissions_dormitory {
+  code "character varying(4)" [pk, not null]
+  name "character varying(50)" [not null]
+  address "character varying(150)" [not null]
+  description "text" [not null]
+  seats "smallint" [not null]
+  latitude "numeric(9,6)" [not null]
+  longitude "numeric(9,6)" [not null]
+}
+
+Table admissions_emaildelivery {
+  id "bigint" [pk, not null]
+  recipient "character varying(254)" [not null]
+  state "character varying(10)" [not null]
+  attempts "smallint" [not null]
+  available_at "timestamp with time zone" [not null]
+  notification_id "bigint" [not null]
+  indexes {
+    (notification_id) [unique]
+  }
+}
+
+Ref: admissions_notification.id - admissions_emaildelivery.notification_id
+Table admissions_examresult {
+  id "bigint" [pk, not null]
+  subject "character varying(80)" [not null]
+  level "character varying(12)" [not null]
+  value "numeric(5,2)" [not null]
+  user_id "bigint" [not null]
+  indexes {
+    (user_id, subject, level) [unique]
+  }
+}
+
+Ref: admissions_examresult.user_id > admissions_user.id
+Table admissions_faculty {
+  id "bigint" [pk, not null]
+  code "character varying(12)" [not null]
+  name "character varying(150)" [not null]
+  color "character varying(7)" [not null]
+  indexes {
+    (code) [unique]
+  }
+}
+
+Table admissions_housingapplication {
+  id "bigint" [pk, not null]
+  status "character varying(12)" [not null]
+  distance_km "numeric(7,2)" [not null]
+  score_index "numeric(6,2)"
+  submitted_at "timestamp with time zone" [not null]
+  allocated_id "character varying(4)"
+  campaign_id "bigint" [not null]
+  candidate_id "bigint" [not null]
+  enrollment_id "bigint"
+  preferred_id "character varying(4)" [not null]
+  indexes {
+    (candidate_id, campaign_id) [unique]
+  }
+}
+
+Ref: admissions_housingapplication.allocated_id > admissions_dormitory.code
+Ref: admissions_housingapplication.campaign_id > admissions_campaign.id
+Ref: admissions_housingapplication.candidate_id > admissions_user.id
+Ref: admissions_housingapplication.enrollment_id > admissions_application.id
+Ref: admissions_housingapplication.preferred_id > admissions_dormitory.code
+Table admissions_notification {
+  id "bigint" [pk, not null]
+  title "character varying(150)" [not null]
+  message "text" [not null]
+  created_at "timestamp with time zone" [not null]
+  read "boolean" [not null]
+  user_id "bigint" [not null]
+}
+
+Ref: admissions_notification.user_id > admissions_user.id
+Table admissions_offer {
+  id "bigint" [pk, not null]
+  degree "character varying(2)" [not null]
+  mode "character varying(2)" [not null]
+  capacity "integer" [not null]
+  minimum "integer" [not null]
+  fee "numeric(8,2)" [not null]
+  portfolio_required "boolean" [not null]
+  portfolio_bonus "boolean" [not null]
+  state "character varying(12)" [not null]
+  rule_version "character varying(30)" [not null]
+  campaign_id "bigint" [not null]
+  program_id "bigint" [not null]
+  photo_required "boolean" [not null]
+  tuition_per_semester "numeric(8,2)"
+  indexes {
+    (campaign_id, program_id, degree, mode) [unique]
+  }
+}
+
+Ref: admissions_offer.campaign_id > admissions_campaign.id
+Ref: admissions_offer.program_id > admissions_program.id
+Table admissions_profiledocument {
+  id "bigint" [pk, not null]
+  kind "character varying(16)" [not null]
+  version "integer" [not null]
+  file "character varying(100)" [not null]
+  original_name "character varying(200)" [not null]
+  sha256 "character varying(64)" [not null]
+  uploaded_at "timestamp with time zone" [not null]
+  user_id "bigint" [not null]
+  indexes {
+    (user_id, kind, version) [unique]
+  }
+}
+
+Ref: admissions_profiledocument.user_id > admissions_user.id
+Table admissions_profilephoto {
+  id "bigint" [pk, not null]
+  version "integer" [not null]
+  file "character varying(100)" [not null]
+  original_name "character varying(200)" [not null]
+  sha256 "character varying(64)" [not null]
+  uploaded_at "timestamp with time zone" [not null]
+  approved_at "timestamp with time zone"
+  approved_by_id "bigint"
+  user_id "bigint" [not null]
+  indexes {
+    (user_id, version) [unique]
+  }
+}
+
+Ref: admissions_profilephoto.approved_by_id > admissions_user.id
+Ref: admissions_profilephoto.user_id > admissions_user.id
+Table admissions_program {
+  id "bigint" [pk, not null]
+  name "character varying(200)" [not null]
+  description "text" [not null]
+  source "character varying(500)" [not null]
+  illustrative "boolean" [not null]
+  faculty_id "bigint" [not null]
+  indexes {
+    (name, faculty_id) [unique]
+  }
+}
+
+Ref: admissions_program.faculty_id > admissions_faculty.id
+Table admissions_program_partner_faculties {
+  id "bigint" [pk, not null]
+  program_id "bigint" [not null]
+  faculty_id "bigint" [not null]
+  indexes {
+    (program_id, faculty_id) [unique]
+  }
+}
+
+Ref: admissions_program_partner_faculties.faculty_id > admissions_faculty.id
+Ref: admissions_program_partner_faculties.program_id > admissions_program.id
+Table admissions_publication {
+  id "bigint" [pk, not null]
+  version "integer" [not null]
+  published_at "timestamp with time zone" [not null]
+  reason "text" [not null]
+  cutoff "numeric(8,2)"
+  qualified_count "integer" [not null]
+  available_places "integer" [not null]
+  overflow "integer" [not null]
+  rule "jsonb" [not null]
+  author_id "bigint" [not null]
+  offer_id "bigint" [not null]
+  round_id "bigint" [not null]
+  indexes {
+    (offer_id, round_id, version) [unique]
+  }
+}
+
+Ref: admissions_publication.author_id > admissions_user.id
+Ref: admissions_publication.offer_id > admissions_offer.id
+Ref: admissions_publication.round_id > admissions_round.id
+Table admissions_rankingentry {
+  id "bigint" [pk, not null]
+  rank "integer" [not null]
+  score "numeric(8,2)"
+  decision "character varying(12)" [not null]
+  explanation "jsonb" [not null]
+  application_id "bigint" [not null]
+  publication_id "bigint" [not null]
+  indexes {
+    (publication_id, application_id) [unique]
+  }
+}
+
+Ref: admissions_rankingentry.application_id > admissions_application.id
+Ref: admissions_rankingentry.publication_id > admissions_publication.id
+Table admissions_residence {
+  user_id "bigint" [pk, not null]
+  city "character varying(100)" [not null]
+  street "character varying(150)" [not null]
+  building "character varying(20)" [not null]
+  apartment "character varying(20)" [not null]
+  postal_code "character varying(6)" [not null]
+  latitude "numeric(9,6)"
+  longitude "numeric(9,6)"
+}
+
+Ref: admissions_user.id - admissions_residence.user_id
+Table admissions_round {
+  id "bigint" [pk, not null]
+  degree "character varying(2)" [not null]
+  number "smallint" [not null]
+  start "timestamp with time zone" [not null]
+  application_end "timestamp with time zone" [not null]
+  end "timestamp with time zone" [not null]
+  campaign_id "bigint" [not null]
+  indexes {
+    (campaign_id, degree, number) [unique]
+  }
+}
+
+Ref: admissions_round.campaign_id > admissions_campaign.id
+Table admissions_session {
+  id "bigint" [pk, not null]
+  key_hash "character varying(64)" [not null]
+  expires_at "timestamp with time zone" [not null]
+  user_id "bigint" [not null]
+  indexes {
+    (key_hash) [unique]
+  }
+}
+
+Ref: admissions_session.user_id > admissions_user.id
+Table admissions_user {
+  id "bigint" [pk, not null]
+  password "character varying(128)" [not null]
+  last_login "timestamp with time zone"
+  is_superuser "boolean" [not null]
+  username "character varying(150)" [not null]
+  first_name "character varying(150)" [not null]
+  last_name "character varying(150)" [not null]
+  is_staff "boolean" [not null]
+  is_active "boolean" [not null]
+  date_joined "timestamp with time zone" [not null]
+  email "character varying(254)" [not null]
+  role "character varying(12)" [not null]
+  recovery_hash "character varying(128)" [not null]
+  totp_secret "character varying(64)" [not null]
+  totp_pending "character varying(64)" [not null]
+  totp_last_step "bigint" [not null]
+  is_demo "boolean" [not null]
+  indexes {
+    (email) [unique]
+    (username) [unique]
+  }
+}
+
+Table admissions_user_groups {
+  id "bigint" [pk, not null]
+  user_id "bigint" [not null]
+  group_id "integer" [not null]
+  indexes {
+    (user_id, group_id) [unique]
+  }
+}
+
+Ref: admissions_user_groups.group_id > auth_group.id
+Ref: admissions_user_groups.user_id > admissions_user.id
+Table admissions_user_user_permissions {
+  id "bigint" [pk, not null]
+  user_id "bigint" [not null]
+  permission_id "integer" [not null]
+  indexes {
+    (user_id, permission_id) [unique]
+  }
+}
+
+Ref: admissions_user_user_permissions.permission_id > auth_permission.id
+Ref: admissions_user_user_permissions.user_id > admissions_user.id
+Table auth_group {
+  id "integer" [pk, not null]
+  name "character varying(150)" [not null]
+  indexes {
+    (name) [unique]
+  }
+}
+
+Table auth_group_permissions {
+  id "bigint" [pk, not null]
+  group_id "integer" [not null]
+  permission_id "integer" [not null]
+  indexes {
+    (group_id, permission_id) [unique]
+  }
+}
+
+Ref: auth_group_permissions.permission_id > auth_permission.id
+Ref: auth_group_permissions.group_id > auth_group.id
+Table auth_permission {
+  id "integer" [pk, not null]
+  name "character varying(255)" [not null]
+  content_type_id "integer" [not null]
+  codename "character varying(100)" [not null]
+  indexes {
+    (content_type_id, codename) [unique]
+  }
+}
+
+Ref: auth_permission.content_type_id > django_content_type.id
+Table django_content_type {
+  id "integer" [pk, not null]
+  app_label "character varying(100)" [not null]
+  model "character varying(100)" [not null]
+  indexes {
+    (app_label, model) [unique]
+  }
+}
+
+Table django_migrations {
+  id "bigint" [pk, not null]
+  app "character varying(255)" [not null]
+  name "character varying(255)" [not null]
+  applied "timestamp with time zone" [not null]
+}
+
+Table pk_offer_stats {
+  offer_id "bigint" [pk, not null]
+  applications "bigint" [not null]
+  verified "bigint" [not null]
+  confirmed "bigint" [not null]
+}
+
+Ref: admissions_offer.id - pk_offer_stats.offer_id
+Table pk_row_audit {
+  id "bigint" [pk, not null]
+  occurred_at "timestamp with time zone" [not null]
+  transaction_id "bigint" [not null]
+  db_actor "text" [not null]
+  operation "text" [not null]
+  application_id "bigint" [not null]
+  before_state "jsonb"
+  after_state "jsonb"
+}
+
+Table pk_statement_audit {
+  id "bigint" [pk, not null]
+  occurred_at "timestamp with time zone" [not null]
+  operation "text" [not null]
+  affected_rows "bigint" [not null]
+}
+

@@ -1,0 +1,36 @@
+@startuml
+title Alokacja — wdrożenie dedykowane i projekt wspólnej usługi
+left to right direction
+node "Stacje uczelni A" as Clients {
+ artifact "PySide6 kandydat / komisja / administrator" as UI
+}
+node "Uczelnia A — instancja dedykowana [wdrożone]" as Dedicated {
+ node "API HTTPS" as API
+ database "PostgreSQL A\nloopback" as DBA
+ folder "Dokumenty A" as FilesA
+ artifact "Kopia: baza + pliki + manifest" as BackupA
+ API --> DBA
+ API --> FilesA
+ DBA ..> BackupA : pg_dump
+ FilesA ..> BackupA
+}
+UI --> API : LAN / prywatny CA
+node "Wspólna usługa SaaS [projekt]" as SaaS {
+ node "Wspólny kod API i worker\nzaufany rejestr uczelni" as Shared
+ database "Baza uczelni B\nosobna rola" as DBB
+ database "Baza uczelni C\nosobna rola" as DBC
+ folder "Pliki i kopie B" as FB
+ folder "Pliki i kopie C" as FC
+ Shared --> DBB : wybór po tożsamości B
+ Shared --> DBC : wybór po tożsamości C
+ Shared --> FB
+ Shared --> FC
+}
+cloud "Klienci B i C" as BC
+BC --> Shared : HTTPS i tożsamość instancji
+note bottom of SaaS
+  Współdzielony proces, oddzielne bazy i pliki.
+  To wariant zaprojektowany; kod 0.7.0 obsługuje jedną uczelnię.
+  Selektywna kopia i odtworzenie pozostają granicą instancji.
+end note
+@enduml

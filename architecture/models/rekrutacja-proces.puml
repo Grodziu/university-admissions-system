@@ -1,0 +1,40 @@
+@startuml
+title Przebieg naboru — proces wdrożony
+|Kandydat|
+start
+:Konto, dane profilu, wyniki, pliki;
+:Wybór oferty i wysłanie zgłoszenia;
+|Serwer|
+:Sprawdzenie uprawnień, terminu,\nkompletności i wersji dokumentów;
+|Komisja|
+:Sprawdzenie dokumentów,\nkwoty i zdjęcia;
+if (Potrzebne uzupełnienie?) then (tak)
+  :Zwrot z uzasadnieniem;
+  |Kandydat|
+  :Uzupełnienie i ponowne wysłanie;
+  |Serwer|
+  :Ponowna kontrola terminu i danych;
+endif
+|Komisja|
+if (Dokumenty poprawne?) then (tak)
+  :Zatwierdzenie;
+  |Serwer|
+  :Po zamknięciu zapisów — punktacja,\natomowa publikacja i powiadomienie;
+  |Kandydat|
+  if (Zakwalifikowany i potwierdził?) then (tak)
+    :Potwierdzenie miejsca;
+    |Serwer|
+    :Koniec naboru — minimum,\nuruchomienie oferty i akademiki;
+    |Kandydat|
+    :Ślubowanie demonstracyjne;
+    |Komisja|
+    :Eksport przyjętych;
+  else (nie)
+    |Serwer|
+    :Rezerwa lub wygaśnięcie;\nobsługa następnej tury;
+  endif
+else (nie)
+  :Odrzucenie z uzasadnieniem;
+endif
+stop
+@enduml

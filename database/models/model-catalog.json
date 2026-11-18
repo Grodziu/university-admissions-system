@@ -1,0 +1,5262 @@
+[
+  {
+    "table": "admissions_academicaverage",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "numeric(4,2)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_academica_user_id_1a100cb2_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_academicaverage_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "average_2_5",
+        "kind": "c",
+        "definition": "CHECK (((value >= (2)::numeric) AND (value <= (5)::numeric)))",
+        "columns": [
+          "value"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> value",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "value"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "value"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_allowedprofession",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(80)",
+        "required": true
+      },
+      {
+        "name": "offer_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_allowedpr_offer_id_85dcde20_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (offer_id) REFERENCES admissions_offer(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "offer_id"
+        ]
+      },
+      {
+        "name": "admissions_allowedprofession_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "profession_unique",
+        "kind": "u",
+        "definition": "UNIQUE (offer_id, name)",
+        "columns": [
+          "offer_id",
+          "name"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> name, offer_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "offer_id",
+        "name"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "name",
+          "offer_id"
+        ]
+      },
+      {
+        "determinant": [
+          "offer_id",
+          "name"
+        ],
+        "dependent": [
+          "id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "name"
+        ],
+        [
+          "id",
+          "offer_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_allowedsubject",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "subject",
+        "type": "character varying(80)",
+        "required": true
+      },
+      {
+        "name": "offer_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_allowedsu_offer_id_e56b7f5c_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (offer_id) REFERENCES admissions_offer(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "offer_id"
+        ]
+      },
+      {
+        "name": "admissions_allowedsubject_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "allowed_subject_unique",
+        "kind": "u",
+        "definition": "UNIQUE (offer_id, subject)",
+        "columns": [
+          "offer_id",
+          "subject"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> subject, offer_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "offer_id",
+        "subject"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "subject",
+          "offer_id"
+        ]
+      },
+      {
+        "determinant": [
+          "offer_id",
+          "subject"
+        ],
+        "dependent": [
+          "id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "subject"
+        ],
+        [
+          "id",
+          "offer_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_application",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "public_id",
+        "type": "uuid",
+        "required": true
+      },
+      {
+        "name": "status",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "submitted_at",
+        "type": "timestamp with time zone",
+        "required": false
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "input_snapshot",
+        "type": "jsonb",
+        "required": true
+      },
+      {
+        "name": "feedback",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "bonus_claimed",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "bonus_approved",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "portfolio_grade",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "payment_approved",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "payment_amount",
+        "type": "numeric(8,2)",
+        "required": false
+      },
+      {
+        "name": "portfolio_url",
+        "type": "character varying(500)",
+        "required": true
+      },
+      {
+        "name": "candidate_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "reviewed_by_id",
+        "type": "bigint",
+        "required": false
+      },
+      {
+        "name": "offer_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "round_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "bonus_category",
+        "type": "character varying(40)",
+        "required": true
+      },
+      {
+        "name": "bonus_points",
+        "type": "smallint",
+        "required": true
+      },
+      {
+        "name": "student_number",
+        "type": "character varying(40)",
+        "required": false
+      },
+      {
+        "name": "sworn_at",
+        "type": "timestamp with time zone",
+        "required": false
+      },
+      {
+        "name": "oath_photo_id",
+        "type": "bigint",
+        "required": false
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_applicati_candidate_id_bc69d823_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (candidate_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "candidate_id"
+        ]
+      },
+      {
+        "name": "admissions_applicati_oath_photo_id_84d9f886_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (oath_photo_id) REFERENCES admissions_profilephoto(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "oath_photo_id"
+        ]
+      },
+      {
+        "name": "admissions_applicati_reviewed_by_id_f275eef6_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (reviewed_by_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "reviewed_by_id"
+        ]
+      },
+      {
+        "name": "admissions_application_bonus_points_check",
+        "kind": "c",
+        "definition": "CHECK ((bonus_points >= 0))",
+        "columns": [
+          "bonus_points"
+        ]
+      },
+      {
+        "name": "admissions_application_offer_id_f69e8b11_fk_admissions_offer_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (offer_id) REFERENCES admissions_offer(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "offer_id"
+        ]
+      },
+      {
+        "name": "admissions_application_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_application_public_id_key",
+        "kind": "u",
+        "definition": "UNIQUE (public_id)",
+        "columns": [
+          "public_id"
+        ]
+      },
+      {
+        "name": "admissions_application_revision_check",
+        "kind": "c",
+        "definition": "CHECK ((revision >= 0))",
+        "columns": [
+          "revision"
+        ]
+      },
+      {
+        "name": "admissions_application_round_id_edd3fa67_fk_admissions_round_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (round_id) REFERENCES admissions_round(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "round_id"
+        ]
+      },
+      {
+        "name": "admissions_application_student_number_key",
+        "kind": "u",
+        "definition": "UNIQUE (student_number)",
+        "columns": [
+          "student_number"
+        ]
+      },
+      {
+        "name": "bonus_0_50",
+        "kind": "c",
+        "definition": "CHECK ((bonus_points <= 50))",
+        "columns": [
+          "bonus_points"
+        ]
+      },
+      {
+        "name": "one_application_per_offer",
+        "kind": "u",
+        "definition": "UNIQUE (candidate_id, offer_id)",
+        "columns": [
+          "candidate_id",
+          "offer_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> public_id, status, created_at, submitted_at, revision, input_snapshot, feedback, bonus_claimed, bonus_approved, portfolio_grade, payment_approved, payment_amount, portfolio_url, candidate_id, reviewed_by_id, offer_id, round_id, bonus_category, bonus_points, student_number, sworn_at, oath_photo_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "public_id"
+      ],
+      [
+        "candidate_id",
+        "offer_id"
+      ]
+    ],
+    "conditional_unique_keys": [
+      [
+        "student_number"
+      ]
+    ],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "public_id",
+          "status",
+          "created_at",
+          "submitted_at",
+          "revision",
+          "input_snapshot",
+          "feedback",
+          "bonus_claimed",
+          "bonus_approved",
+          "portfolio_grade",
+          "payment_approved",
+          "payment_amount",
+          "portfolio_url",
+          "candidate_id",
+          "reviewed_by_id",
+          "offer_id",
+          "round_id",
+          "bonus_category",
+          "bonus_points",
+          "student_number",
+          "sworn_at",
+          "oath_photo_id"
+        ]
+      },
+      {
+        "determinant": [
+          "public_id"
+        ],
+        "dependent": [
+          "id",
+          "status",
+          "created_at",
+          "submitted_at",
+          "revision",
+          "input_snapshot",
+          "feedback",
+          "bonus_claimed",
+          "bonus_approved",
+          "portfolio_grade",
+          "payment_approved",
+          "payment_amount",
+          "portfolio_url",
+          "candidate_id",
+          "reviewed_by_id",
+          "offer_id",
+          "round_id",
+          "bonus_category",
+          "bonus_points",
+          "student_number",
+          "sworn_at",
+          "oath_photo_id"
+        ]
+      },
+      {
+        "determinant": [
+          "candidate_id",
+          "offer_id"
+        ],
+        "dependent": [
+          "id",
+          "public_id",
+          "status",
+          "created_at",
+          "submitted_at",
+          "revision",
+          "input_snapshot",
+          "feedback",
+          "bonus_claimed",
+          "bonus_approved",
+          "portfolio_grade",
+          "payment_approved",
+          "payment_amount",
+          "portfolio_url",
+          "reviewed_by_id",
+          "round_id",
+          "bonus_category",
+          "bonus_points",
+          "student_number",
+          "sworn_at",
+          "oath_photo_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "public_id"
+        ],
+        [
+          "id",
+          "status"
+        ],
+        [
+          "id",
+          "created_at"
+        ],
+        [
+          "id",
+          "submitted_at"
+        ],
+        [
+          "id",
+          "revision"
+        ],
+        [
+          "id",
+          "input_snapshot"
+        ],
+        [
+          "id",
+          "feedback"
+        ],
+        [
+          "id",
+          "bonus_claimed"
+        ],
+        [
+          "id",
+          "bonus_approved"
+        ],
+        [
+          "id",
+          "portfolio_grade"
+        ],
+        [
+          "id",
+          "payment_approved"
+        ],
+        [
+          "id",
+          "payment_amount"
+        ],
+        [
+          "id",
+          "portfolio_url"
+        ],
+        [
+          "id",
+          "candidate_id"
+        ],
+        [
+          "id",
+          "reviewed_by_id"
+        ],
+        [
+          "id",
+          "offer_id"
+        ],
+        [
+          "id",
+          "round_id"
+        ],
+        [
+          "id",
+          "bonus_category"
+        ],
+        [
+          "id",
+          "bonus_points"
+        ],
+        [
+          "id",
+          "student_number"
+        ],
+        [
+          "id",
+          "sworn_at"
+        ],
+        [
+          "id",
+          "oath_photo_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_auditevent",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "action",
+        "type": "character varying(80)",
+        "required": true
+      },
+      {
+        "name": "entity",
+        "type": "character varying(120)",
+        "required": true
+      },
+      {
+        "name": "details",
+        "type": "jsonb",
+        "required": true
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "actor_id",
+        "type": "bigint",
+        "required": false
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_auditevent_actor_id_659c16ef_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (actor_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "actor_id"
+        ]
+      },
+      {
+        "name": "admissions_auditevent_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> action, entity, details, created_at, actor_id",
+    "candidate_keys": [
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "action",
+          "entity",
+          "details",
+          "created_at",
+          "actor_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "action"
+        ],
+        [
+          "id",
+          "entity"
+        ],
+        [
+          "id",
+          "details"
+        ],
+        [
+          "id",
+          "created_at"
+        ],
+        [
+          "id",
+          "actor_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_campaign",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(100)",
+        "required": true
+      },
+      {
+        "name": "start",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "end",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "demo_clock",
+        "type": "timestamp with time zone",
+        "required": false
+      },
+      {
+        "name": "closed",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "demo_scenario",
+        "type": "character varying(40)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_campaign_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> name, start, end, demo_clock, closed, demo_scenario",
+    "candidate_keys": [
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "name",
+          "start",
+          "end",
+          "demo_clock",
+          "closed",
+          "demo_scenario"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "name"
+        ],
+        [
+          "id",
+          "start"
+        ],
+        [
+          "id",
+          "end"
+        ],
+        [
+          "id",
+          "demo_clock"
+        ],
+        [
+          "id",
+          "closed"
+        ],
+        [
+          "id",
+          "demo_scenario"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_candidateidentity",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "pesel",
+        "type": "character varying(11)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_candidate_user_id_775e4a35_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_candidateidentity_pesel_key",
+        "kind": "u",
+        "definition": "UNIQUE (pesel)",
+        "columns": [
+          "pesel"
+        ]
+      },
+      {
+        "name": "admissions_candidateidentity_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "pesel_digits",
+        "kind": "c",
+        "definition": "CHECK (((pesel)::text ~ '^[0-9]{11}$'::text))",
+        "columns": [
+          "pesel"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> pesel",
+    "candidate_keys": [
+      [
+        "pesel"
+      ],
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "pesel"
+        ],
+        "dependent": [
+          "user_id"
+        ]
+      },
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "pesel"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "pesel"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_candidatenotificationaddress",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "character varying(254)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_candidate_user_id_1680d9c0_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_contactanchor(user_id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_candidatenotificationaddress_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "notification_fact_nonempty",
+        "kind": "c",
+        "definition": "CHECK ((NOT ((value)::text = ''::text)))",
+        "columns": [
+          "value"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> value",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "value"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "value"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_candidatephone",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "character varying(30)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_candidate_user_id_ada009aa_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_contactanchor(user_id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_candidatephone_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "phone_fact_nonempty",
+        "kind": "c",
+        "definition": "CHECK ((NOT ((value)::text = ''::text)))",
+        "columns": [
+          "value"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> value",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "value"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "value"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_candidateportfolio",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "character varying(500)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_candidate_user_id_3ae462f8_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_contactanchor(user_id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_candidateportfolio_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "portfolio_fact_nonempty",
+        "kind": "c",
+        "definition": "CHECK ((NOT ((value)::text = ''::text)))",
+        "columns": [
+          "value"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> value",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "value"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "value"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_contactanchor",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_contactanchor_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_contactanchor_user_id_2e578bb6_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> ",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": []
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_diploma",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "character varying(120)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_diploma_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_diploma_user_id_77375c8a_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> title",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "title"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "title"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_document",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "kind",
+        "type": "character varying(16)",
+        "required": true
+      },
+      {
+        "name": "revision",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "file",
+        "type": "character varying(100)",
+        "required": true
+      },
+      {
+        "name": "original_name",
+        "type": "character varying(200)",
+        "required": true
+      },
+      {
+        "name": "sha256",
+        "type": "character varying(64)",
+        "required": true
+      },
+      {
+        "name": "uploaded_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "application_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "reused_from_id",
+        "type": "bigint",
+        "required": false
+      },
+      {
+        "name": "profile_source_id",
+        "type": "bigint",
+        "required": false
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_document_application_id_20bf69fa_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (application_id) REFERENCES admissions_application(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "application_id"
+        ]
+      },
+      {
+        "name": "admissions_document_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_document_profile_source_id_23990467_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (profile_source_id) REFERENCES admissions_profiledocument(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "profile_source_id"
+        ]
+      },
+      {
+        "name": "admissions_document_reused_from_id_28380dca_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (reused_from_id) REFERENCES admissions_document(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "reused_from_id"
+        ]
+      },
+      {
+        "name": "admissions_document_revision_check",
+        "kind": "c",
+        "definition": "CHECK ((revision >= 0))",
+        "columns": [
+          "revision"
+        ]
+      },
+      {
+        "name": "document_revision",
+        "kind": "u",
+        "definition": "UNIQUE (application_id, kind, revision)",
+        "columns": [
+          "application_id",
+          "kind",
+          "revision"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> kind, revision, file, original_name, sha256, uploaded_at, application_id, reused_from_id, profile_source_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "application_id",
+        "kind",
+        "revision"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "kind",
+          "revision",
+          "file",
+          "original_name",
+          "sha256",
+          "uploaded_at",
+          "application_id",
+          "reused_from_id",
+          "profile_source_id"
+        ]
+      },
+      {
+        "determinant": [
+          "application_id",
+          "kind",
+          "revision"
+        ],
+        "dependent": [
+          "id",
+          "file",
+          "original_name",
+          "sha256",
+          "uploaded_at",
+          "reused_from_id",
+          "profile_source_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "kind"
+        ],
+        [
+          "id",
+          "revision"
+        ],
+        [
+          "id",
+          "file"
+        ],
+        [
+          "id",
+          "original_name"
+        ],
+        [
+          "id",
+          "sha256"
+        ],
+        [
+          "id",
+          "uploaded_at"
+        ],
+        [
+          "id",
+          "application_id"
+        ],
+        [
+          "id",
+          "reused_from_id"
+        ],
+        [
+          "id",
+          "profile_source_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_dormitory",
+    "key": "code",
+    "columns": [
+      {
+        "name": "code",
+        "type": "character varying(4)",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(50)",
+        "required": true
+      },
+      {
+        "name": "address",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "seats",
+        "type": "smallint",
+        "required": true
+      },
+      {
+        "name": "latitude",
+        "type": "numeric(9,6)",
+        "required": true
+      },
+      {
+        "name": "longitude",
+        "type": "numeric(9,6)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_dormitory_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (code)",
+        "columns": [
+          "code"
+        ]
+      },
+      {
+        "name": "admissions_dormitory_seats_check",
+        "kind": "c",
+        "definition": "CHECK ((seats >= 0))",
+        "columns": [
+          "seats"
+        ]
+      },
+      {
+        "name": "dorm_positive_seats",
+        "kind": "c",
+        "definition": "CHECK ((seats > 0))",
+        "columns": [
+          "seats"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "code -> name, address, description, seats, latitude, longitude",
+    "candidate_keys": [
+      [
+        "code"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "code"
+        ],
+        "dependent": [
+          "name",
+          "address",
+          "description",
+          "seats",
+          "latitude",
+          "longitude"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "code"
+      ],
+      "facts": [
+        [
+          "code",
+          "name"
+        ],
+        [
+          "code",
+          "address"
+        ],
+        [
+          "code",
+          "description"
+        ],
+        [
+          "code",
+          "seats"
+        ],
+        [
+          "code",
+          "latitude"
+        ],
+        [
+          "code",
+          "longitude"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_emaildelivery",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "recipient",
+        "type": "character varying(254)",
+        "required": true
+      },
+      {
+        "name": "state",
+        "type": "character varying(10)",
+        "required": true
+      },
+      {
+        "name": "attempts",
+        "type": "smallint",
+        "required": true
+      },
+      {
+        "name": "available_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "notification_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_emaildeli_notification_id_bf73f48e_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (notification_id) REFERENCES admissions_notification(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "notification_id"
+        ]
+      },
+      {
+        "name": "admissions_emaildelivery_attempts_check",
+        "kind": "c",
+        "definition": "CHECK ((attempts >= 0))",
+        "columns": [
+          "attempts"
+        ]
+      },
+      {
+        "name": "admissions_emaildelivery_notification_id_key",
+        "kind": "u",
+        "definition": "UNIQUE (notification_id)",
+        "columns": [
+          "notification_id"
+        ]
+      },
+      {
+        "name": "admissions_emaildelivery_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> recipient, state, attempts, available_at, notification_id",
+    "candidate_keys": [
+      [
+        "notification_id"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "notification_id"
+        ],
+        "dependent": [
+          "id",
+          "recipient",
+          "state",
+          "attempts",
+          "available_at"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "recipient",
+          "state",
+          "attempts",
+          "available_at",
+          "notification_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "recipient"
+        ],
+        [
+          "id",
+          "state"
+        ],
+        [
+          "id",
+          "attempts"
+        ],
+        [
+          "id",
+          "available_at"
+        ],
+        [
+          "id",
+          "notification_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_examresult",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "subject",
+        "type": "character varying(80)",
+        "required": true
+      },
+      {
+        "name": "level",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "value",
+        "type": "numeric(5,2)",
+        "required": true
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_examresult_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_examresult_user_id_f7de4132_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "exam_0_100",
+        "kind": "c",
+        "definition": "CHECK (((value >= (0)::numeric) AND (value <= (100)::numeric)))",
+        "columns": [
+          "value"
+        ]
+      },
+      {
+        "name": "one_exam_result",
+        "kind": "u",
+        "definition": "UNIQUE (user_id, subject, level)",
+        "columns": [
+          "user_id",
+          "subject",
+          "level"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> subject, level, value, user_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "user_id",
+        "subject",
+        "level"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "subject",
+          "level",
+          "value",
+          "user_id"
+        ]
+      },
+      {
+        "determinant": [
+          "user_id",
+          "subject",
+          "level"
+        ],
+        "dependent": [
+          "id",
+          "value"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "subject"
+        ],
+        [
+          "id",
+          "level"
+        ],
+        [
+          "id",
+          "value"
+        ],
+        [
+          "id",
+          "user_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_faculty",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "code",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "color",
+        "type": "character varying(7)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_faculty_code_key",
+        "kind": "u",
+        "definition": "UNIQUE (code)",
+        "columns": [
+          "code"
+        ]
+      },
+      {
+        "name": "admissions_faculty_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> code, name, color",
+    "candidate_keys": [
+      [
+        "code"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "code"
+        ],
+        "dependent": [
+          "id",
+          "name",
+          "color"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "code",
+          "name",
+          "color"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "code"
+        ],
+        [
+          "id",
+          "name"
+        ],
+        [
+          "id",
+          "color"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_housingapplication",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "status",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "distance_km",
+        "type": "numeric(7,2)",
+        "required": true
+      },
+      {
+        "name": "score_index",
+        "type": "numeric(6,2)",
+        "required": false
+      },
+      {
+        "name": "submitted_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "allocated_id",
+        "type": "character varying(4)",
+        "required": false
+      },
+      {
+        "name": "campaign_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "candidate_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "enrollment_id",
+        "type": "bigint",
+        "required": false
+      },
+      {
+        "name": "preferred_id",
+        "type": "character varying(4)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_housingap_allocated_id_f67c70e5_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (allocated_id) REFERENCES admissions_dormitory(code) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "allocated_id"
+        ]
+      },
+      {
+        "name": "admissions_housingap_campaign_id_13dfa3ad_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (campaign_id) REFERENCES admissions_campaign(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "campaign_id"
+        ]
+      },
+      {
+        "name": "admissions_housingap_candidate_id_4a347183_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (candidate_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "candidate_id"
+        ]
+      },
+      {
+        "name": "admissions_housingap_enrollment_id_30b5cb1f_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (enrollment_id) REFERENCES admissions_application(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "enrollment_id"
+        ]
+      },
+      {
+        "name": "admissions_housingap_preferred_id_14f8b4c1_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (preferred_id) REFERENCES admissions_dormitory(code) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "preferred_id"
+        ]
+      },
+      {
+        "name": "admissions_housingapplication_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "housing_allocation_status",
+        "kind": "c",
+        "definition": "CHECK ((((allocated_id IS NOT NULL) AND (enrollment_id IS NOT NULL) AND ((status)::text = 'awarded'::text)) OR ((NOT ((status)::text = 'awarded'::text)) AND (allocated_id IS NULL))))",
+        "columns": [
+          "allocated_id",
+          "enrollment_id",
+          "status"
+        ]
+      },
+      {
+        "name": "housing_distance_positive",
+        "kind": "c",
+        "definition": "CHECK ((distance_km >= (0)::numeric))",
+        "columns": [
+          "distance_km"
+        ]
+      },
+      {
+        "name": "one_housing_request",
+        "kind": "u",
+        "definition": "UNIQUE (candidate_id, campaign_id)",
+        "columns": [
+          "candidate_id",
+          "campaign_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> status, distance_km, score_index, submitted_at, allocated_id, campaign_id, candidate_id, enrollment_id, preferred_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "candidate_id",
+        "campaign_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "status",
+          "distance_km",
+          "score_index",
+          "submitted_at",
+          "allocated_id",
+          "campaign_id",
+          "candidate_id",
+          "enrollment_id",
+          "preferred_id"
+        ]
+      },
+      {
+        "determinant": [
+          "candidate_id",
+          "campaign_id"
+        ],
+        "dependent": [
+          "id",
+          "status",
+          "distance_km",
+          "score_index",
+          "submitted_at",
+          "allocated_id",
+          "enrollment_id",
+          "preferred_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "status"
+        ],
+        [
+          "id",
+          "distance_km"
+        ],
+        [
+          "id",
+          "score_index"
+        ],
+        [
+          "id",
+          "submitted_at"
+        ],
+        [
+          "id",
+          "allocated_id"
+        ],
+        [
+          "id",
+          "campaign_id"
+        ],
+        [
+          "id",
+          "candidate_id"
+        ],
+        [
+          "id",
+          "enrollment_id"
+        ],
+        [
+          "id",
+          "preferred_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_notification",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "title",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "message",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "created_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "read",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_notification_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_notification_user_id_c4d349f7_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> title, message, created_at, read, user_id",
+    "candidate_keys": [
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "title",
+          "message",
+          "created_at",
+          "read",
+          "user_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "title"
+        ],
+        [
+          "id",
+          "message"
+        ],
+        [
+          "id",
+          "created_at"
+        ],
+        [
+          "id",
+          "read"
+        ],
+        [
+          "id",
+          "user_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_offer",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "degree",
+        "type": "character varying(2)",
+        "required": true
+      },
+      {
+        "name": "mode",
+        "type": "character varying(2)",
+        "required": true
+      },
+      {
+        "name": "capacity",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "minimum",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "fee",
+        "type": "numeric(8,2)",
+        "required": true
+      },
+      {
+        "name": "portfolio_required",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "portfolio_bonus",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "state",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "rule_version",
+        "type": "character varying(30)",
+        "required": true
+      },
+      {
+        "name": "campaign_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "program_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "photo_required",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "tuition_per_semester",
+        "type": "numeric(8,2)",
+        "required": false
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_offer_campaign_id_f3964ec1_fk_admissions_campaign_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (campaign_id) REFERENCES admissions_campaign(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "campaign_id"
+        ]
+      },
+      {
+        "name": "admissions_offer_capacity_check",
+        "kind": "c",
+        "definition": "CHECK ((capacity >= 0))",
+        "columns": [
+          "capacity"
+        ]
+      },
+      {
+        "name": "admissions_offer_minimum_check",
+        "kind": "c",
+        "definition": "CHECK ((minimum >= 0))",
+        "columns": [
+          "minimum"
+        ]
+      },
+      {
+        "name": "admissions_offer_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_offer_program_id_8c346efc_fk_admissions_program_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (program_id) REFERENCES admissions_program(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "program_id"
+        ]
+      },
+      {
+        "name": "offer_limits",
+        "kind": "c",
+        "definition": "CHECK (((capacity >= minimum) AND (minimum > 0) AND (fee > (0)::numeric)))",
+        "columns": [
+          "capacity",
+          "minimum",
+          "fee"
+        ]
+      },
+      {
+        "name": "positive_semester_tuition",
+        "kind": "c",
+        "definition": "CHECK (((tuition_per_semester IS NULL) OR (tuition_per_semester > (0)::numeric)))",
+        "columns": [
+          "tuition_per_semester"
+        ]
+      },
+      {
+        "name": "postgraduate_part_time",
+        "kind": "c",
+        "definition": "CHECK (((NOT ((degree)::text = 'PG'::text)) OR ((mode)::text = 'N'::text)))",
+        "columns": [
+          "degree",
+          "mode"
+        ]
+      },
+      {
+        "name": "unique_offer",
+        "kind": "u",
+        "definition": "UNIQUE (campaign_id, program_id, degree, mode)",
+        "columns": [
+          "campaign_id",
+          "program_id",
+          "degree",
+          "mode"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> degree, mode, capacity, minimum, fee, portfolio_required, portfolio_bonus, state, rule_version, campaign_id, program_id, photo_required, tuition_per_semester",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "campaign_id",
+        "program_id",
+        "degree",
+        "mode"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "degree",
+          "mode",
+          "capacity",
+          "minimum",
+          "fee",
+          "portfolio_required",
+          "portfolio_bonus",
+          "state",
+          "rule_version",
+          "campaign_id",
+          "program_id",
+          "photo_required",
+          "tuition_per_semester"
+        ]
+      },
+      {
+        "determinant": [
+          "campaign_id",
+          "program_id",
+          "degree",
+          "mode"
+        ],
+        "dependent": [
+          "id",
+          "capacity",
+          "minimum",
+          "fee",
+          "portfolio_required",
+          "portfolio_bonus",
+          "state",
+          "rule_version",
+          "photo_required",
+          "tuition_per_semester"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "degree"
+        ],
+        [
+          "id",
+          "mode"
+        ],
+        [
+          "id",
+          "capacity"
+        ],
+        [
+          "id",
+          "minimum"
+        ],
+        [
+          "id",
+          "fee"
+        ],
+        [
+          "id",
+          "portfolio_required"
+        ],
+        [
+          "id",
+          "portfolio_bonus"
+        ],
+        [
+          "id",
+          "state"
+        ],
+        [
+          "id",
+          "rule_version"
+        ],
+        [
+          "id",
+          "campaign_id"
+        ],
+        [
+          "id",
+          "program_id"
+        ],
+        [
+          "id",
+          "photo_required"
+        ],
+        [
+          "id",
+          "tuition_per_semester"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_profiledocument",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "kind",
+        "type": "character varying(16)",
+        "required": true
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "file",
+        "type": "character varying(100)",
+        "required": true
+      },
+      {
+        "name": "original_name",
+        "type": "character varying(200)",
+        "required": true
+      },
+      {
+        "name": "sha256",
+        "type": "character varying(64)",
+        "required": true
+      },
+      {
+        "name": "uploaded_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_profiledo_user_id_0946c593_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_profiledocument_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_profiledocument_version_check",
+        "kind": "c",
+        "definition": "CHECK ((version >= 0))",
+        "columns": [
+          "version"
+        ]
+      },
+      {
+        "name": "profile_document_version",
+        "kind": "u",
+        "definition": "UNIQUE (user_id, kind, version)",
+        "columns": [
+          "user_id",
+          "kind",
+          "version"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> kind, version, file, original_name, sha256, uploaded_at, user_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "user_id",
+        "kind",
+        "version"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "kind",
+          "version",
+          "file",
+          "original_name",
+          "sha256",
+          "uploaded_at",
+          "user_id"
+        ]
+      },
+      {
+        "determinant": [
+          "user_id",
+          "kind",
+          "version"
+        ],
+        "dependent": [
+          "id",
+          "file",
+          "original_name",
+          "sha256",
+          "uploaded_at"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "kind"
+        ],
+        [
+          "id",
+          "version"
+        ],
+        [
+          "id",
+          "file"
+        ],
+        [
+          "id",
+          "original_name"
+        ],
+        [
+          "id",
+          "sha256"
+        ],
+        [
+          "id",
+          "uploaded_at"
+        ],
+        [
+          "id",
+          "user_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_profilephoto",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "file",
+        "type": "character varying(100)",
+        "required": true
+      },
+      {
+        "name": "original_name",
+        "type": "character varying(200)",
+        "required": true
+      },
+      {
+        "name": "sha256",
+        "type": "character varying(64)",
+        "required": true
+      },
+      {
+        "name": "uploaded_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "approved_at",
+        "type": "timestamp with time zone",
+        "required": false
+      },
+      {
+        "name": "approved_by_id",
+        "type": "bigint",
+        "required": false
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_profileph_approved_by_id_afac4a63_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (approved_by_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "approved_by_id"
+        ]
+      },
+      {
+        "name": "admissions_profilephoto_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_profilephoto_user_id_ec5f0a4b_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_profilephoto_version_check",
+        "kind": "c",
+        "definition": "CHECK ((version >= 0))",
+        "columns": [
+          "version"
+        ]
+      },
+      {
+        "name": "profile_photo_version",
+        "kind": "u",
+        "definition": "UNIQUE (user_id, version)",
+        "columns": [
+          "user_id",
+          "version"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> version, file, original_name, sha256, uploaded_at, approved_at, approved_by_id, user_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "user_id",
+        "version"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "version",
+          "file",
+          "original_name",
+          "sha256",
+          "uploaded_at",
+          "approved_at",
+          "approved_by_id",
+          "user_id"
+        ]
+      },
+      {
+        "determinant": [
+          "user_id",
+          "version"
+        ],
+        "dependent": [
+          "id",
+          "file",
+          "original_name",
+          "sha256",
+          "uploaded_at",
+          "approved_at",
+          "approved_by_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "version"
+        ],
+        [
+          "id",
+          "file"
+        ],
+        [
+          "id",
+          "original_name"
+        ],
+        [
+          "id",
+          "sha256"
+        ],
+        [
+          "id",
+          "uploaded_at"
+        ],
+        [
+          "id",
+          "approved_at"
+        ],
+        [
+          "id",
+          "approved_by_id"
+        ],
+        [
+          "id",
+          "user_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_program",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(200)",
+        "required": true
+      },
+      {
+        "name": "description",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "source",
+        "type": "character varying(500)",
+        "required": true
+      },
+      {
+        "name": "illustrative",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "faculty_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_program_faculty_id_7c5bd2e9_fk_admissions_faculty_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (faculty_id) REFERENCES admissions_faculty(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "faculty_id"
+        ]
+      },
+      {
+        "name": "admissions_program_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "program_faculty_name",
+        "kind": "u",
+        "definition": "UNIQUE (name, faculty_id)",
+        "columns": [
+          "name",
+          "faculty_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> name, description, source, illustrative, faculty_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "name",
+        "faculty_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "name",
+          "description",
+          "source",
+          "illustrative",
+          "faculty_id"
+        ]
+      },
+      {
+        "determinant": [
+          "name",
+          "faculty_id"
+        ],
+        "dependent": [
+          "id",
+          "description",
+          "source",
+          "illustrative"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "name"
+        ],
+        [
+          "id",
+          "description"
+        ],
+        [
+          "id",
+          "source"
+        ],
+        [
+          "id",
+          "illustrative"
+        ],
+        [
+          "id",
+          "faculty_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_program_partner_faculties",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "program_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "faculty_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_program_p_faculty_id_d5ff5431_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (faculty_id) REFERENCES admissions_faculty(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "faculty_id"
+        ]
+      },
+      {
+        "name": "admissions_program_p_program_id_d6a69868_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (program_id) REFERENCES admissions_program(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "program_id"
+        ]
+      },
+      {
+        "name": "admissions_program_partn_program_id_faculty_id_529686d0_uniq",
+        "kind": "u",
+        "definition": "UNIQUE (program_id, faculty_id)",
+        "columns": [
+          "program_id",
+          "faculty_id"
+        ]
+      },
+      {
+        "name": "admissions_program_partner_faculties_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> program_id, faculty_id",
+    "candidate_keys": [
+      [
+        "program_id",
+        "faculty_id"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "program_id",
+          "faculty_id"
+        ],
+        "dependent": [
+          "id"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "program_id",
+          "faculty_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "program_id"
+        ],
+        [
+          "id",
+          "faculty_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_publication",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "version",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "published_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "cutoff",
+        "type": "numeric(8,2)",
+        "required": false
+      },
+      {
+        "name": "qualified_count",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "available_places",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "overflow",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "rule",
+        "type": "jsonb",
+        "required": true
+      },
+      {
+        "name": "author_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "offer_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "round_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_publication_author_id_a18dc5e2_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (author_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "author_id"
+        ]
+      },
+      {
+        "name": "admissions_publication_available_places_check",
+        "kind": "c",
+        "definition": "CHECK ((available_places >= 0))",
+        "columns": [
+          "available_places"
+        ]
+      },
+      {
+        "name": "admissions_publication_offer_id_084e2987_fk_admissions_offer_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (offer_id) REFERENCES admissions_offer(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "offer_id"
+        ]
+      },
+      {
+        "name": "admissions_publication_overflow_check",
+        "kind": "c",
+        "definition": "CHECK ((overflow >= 0))",
+        "columns": [
+          "overflow"
+        ]
+      },
+      {
+        "name": "admissions_publication_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_publication_qualified_count_check",
+        "kind": "c",
+        "definition": "CHECK ((qualified_count >= 0))",
+        "columns": [
+          "qualified_count"
+        ]
+      },
+      {
+        "name": "admissions_publication_round_id_8787344e_fk_admissions_round_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (round_id) REFERENCES admissions_round(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "round_id"
+        ]
+      },
+      {
+        "name": "admissions_publication_version_check",
+        "kind": "c",
+        "definition": "CHECK ((version >= 0))",
+        "columns": [
+          "version"
+        ]
+      },
+      {
+        "name": "publication_version",
+        "kind": "u",
+        "definition": "UNIQUE (offer_id, round_id, version)",
+        "columns": [
+          "offer_id",
+          "round_id",
+          "version"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> version, published_at, reason, cutoff, qualified_count, available_places, overflow, rule, author_id, offer_id, round_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "offer_id",
+        "round_id",
+        "version"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "version",
+          "published_at",
+          "reason",
+          "cutoff",
+          "qualified_count",
+          "available_places",
+          "overflow",
+          "rule",
+          "author_id",
+          "offer_id",
+          "round_id"
+        ]
+      },
+      {
+        "determinant": [
+          "offer_id",
+          "round_id",
+          "version"
+        ],
+        "dependent": [
+          "id",
+          "published_at",
+          "reason",
+          "cutoff",
+          "qualified_count",
+          "available_places",
+          "overflow",
+          "rule",
+          "author_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "version"
+        ],
+        [
+          "id",
+          "published_at"
+        ],
+        [
+          "id",
+          "reason"
+        ],
+        [
+          "id",
+          "cutoff"
+        ],
+        [
+          "id",
+          "qualified_count"
+        ],
+        [
+          "id",
+          "available_places"
+        ],
+        [
+          "id",
+          "overflow"
+        ],
+        [
+          "id",
+          "rule"
+        ],
+        [
+          "id",
+          "author_id"
+        ],
+        [
+          "id",
+          "offer_id"
+        ],
+        [
+          "id",
+          "round_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_rankingentry",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "rank",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "score",
+        "type": "numeric(8,2)",
+        "required": false
+      },
+      {
+        "name": "decision",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "explanation",
+        "type": "jsonb",
+        "required": true
+      },
+      {
+        "name": "application_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "publication_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_rankingen_application_id_dedff4ea_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (application_id) REFERENCES admissions_application(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "application_id"
+        ]
+      },
+      {
+        "name": "admissions_rankingen_publication_id_d68f1f5c_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (publication_id) REFERENCES admissions_publication(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "publication_id"
+        ]
+      },
+      {
+        "name": "admissions_rankingentry_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_rankingentry_rank_check",
+        "kind": "c",
+        "definition": "CHECK ((rank >= 0))",
+        "columns": [
+          "rank"
+        ]
+      },
+      {
+        "name": "one_ranking_entry",
+        "kind": "u",
+        "definition": "UNIQUE (publication_id, application_id)",
+        "columns": [
+          "publication_id",
+          "application_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> rank, score, decision, explanation, application_id, publication_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "publication_id",
+        "application_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "rank",
+          "score",
+          "decision",
+          "explanation",
+          "application_id",
+          "publication_id"
+        ]
+      },
+      {
+        "determinant": [
+          "publication_id",
+          "application_id"
+        ],
+        "dependent": [
+          "id",
+          "rank",
+          "score",
+          "decision",
+          "explanation"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "rank"
+        ],
+        [
+          "id",
+          "score"
+        ],
+        [
+          "id",
+          "decision"
+        ],
+        [
+          "id",
+          "explanation"
+        ],
+        [
+          "id",
+          "application_id"
+        ],
+        [
+          "id",
+          "publication_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_residence",
+    "key": "user_id",
+    "columns": [
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "city",
+        "type": "character varying(100)",
+        "required": true
+      },
+      {
+        "name": "street",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "building",
+        "type": "character varying(20)",
+        "required": true
+      },
+      {
+        "name": "apartment",
+        "type": "character varying(20)",
+        "required": true
+      },
+      {
+        "name": "postal_code",
+        "type": "character varying(6)",
+        "required": true
+      },
+      {
+        "name": "latitude",
+        "type": "numeric(9,6)",
+        "required": false
+      },
+      {
+        "name": "longitude",
+        "type": "numeric(9,6)",
+        "required": false
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_residence_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (user_id)",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_residence_user_id_e0b68702_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "residence_coordinate_pair",
+        "kind": "c",
+        "definition": "CHECK ((((latitude IS NULL) AND (longitude IS NULL)) OR ((latitude >= ('-90'::integer)::numeric) AND (latitude IS NOT NULL) AND (latitude <= (90)::numeric) AND (longitude >= ('-180'::integer)::numeric) AND (longitude IS NOT NULL) AND (longitude <= (180)::numeric))))",
+        "columns": [
+          "latitude",
+          "longitude"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "user_id -> city, street, building, apartment, postal_code, latitude, longitude",
+    "candidate_keys": [
+      [
+        "user_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id"
+        ],
+        "dependent": [
+          "city",
+          "street",
+          "building",
+          "apartment",
+          "postal_code",
+          "latitude",
+          "longitude"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "user_id"
+      ],
+      "facts": [
+        [
+          "user_id",
+          "city"
+        ],
+        [
+          "user_id",
+          "street"
+        ],
+        [
+          "user_id",
+          "building"
+        ],
+        [
+          "user_id",
+          "apartment"
+        ],
+        [
+          "user_id",
+          "postal_code"
+        ],
+        [
+          "user_id",
+          "latitude"
+        ],
+        [
+          "user_id",
+          "longitude"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_round",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "degree",
+        "type": "character varying(2)",
+        "required": true
+      },
+      {
+        "name": "number",
+        "type": "smallint",
+        "required": true
+      },
+      {
+        "name": "start",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "application_end",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "end",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "campaign_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_round_campaign_id_e3f38220_fk_admissions_campaign_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (campaign_id) REFERENCES admissions_campaign(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "campaign_id"
+        ]
+      },
+      {
+        "name": "admissions_round_number_check",
+        "kind": "c",
+        "definition": "CHECK ((number >= 0))",
+        "columns": [
+          "number"
+        ]
+      },
+      {
+        "name": "admissions_round_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "one_round",
+        "kind": "u",
+        "definition": "UNIQUE (campaign_id, degree, number)",
+        "columns": [
+          "campaign_id",
+          "degree",
+          "number"
+        ]
+      },
+      {
+        "name": "round_dates",
+        "kind": "c",
+        "definition": "CHECK (((start < application_end) AND (application_end < \"end\")))",
+        "columns": [
+          "start",
+          "application_end",
+          "end"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> degree, number, start, application_end, end, campaign_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "campaign_id",
+        "degree",
+        "number"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "degree",
+          "number",
+          "start",
+          "application_end",
+          "end",
+          "campaign_id"
+        ]
+      },
+      {
+        "determinant": [
+          "campaign_id",
+          "degree",
+          "number"
+        ],
+        "dependent": [
+          "id",
+          "start",
+          "application_end",
+          "end"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "degree"
+        ],
+        [
+          "id",
+          "number"
+        ],
+        [
+          "id",
+          "start"
+        ],
+        [
+          "id",
+          "application_end"
+        ],
+        [
+          "id",
+          "end"
+        ],
+        [
+          "id",
+          "campaign_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_session",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "key_hash",
+        "type": "character varying(64)",
+        "required": true
+      },
+      {
+        "name": "expires_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_session_key_hash_key",
+        "kind": "u",
+        "definition": "UNIQUE (key_hash)",
+        "columns": [
+          "key_hash"
+        ]
+      },
+      {
+        "name": "admissions_session_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_session_user_id_523e9cc3_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> key_hash, expires_at, user_id",
+    "candidate_keys": [
+      [
+        "key_hash"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "key_hash"
+        ],
+        "dependent": [
+          "id",
+          "expires_at",
+          "user_id"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "key_hash",
+          "expires_at",
+          "user_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "key_hash"
+        ],
+        [
+          "id",
+          "expires_at"
+        ],
+        [
+          "id",
+          "user_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_user",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "password",
+        "type": "character varying(128)",
+        "required": true
+      },
+      {
+        "name": "last_login",
+        "type": "timestamp with time zone",
+        "required": false
+      },
+      {
+        "name": "is_superuser",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "username",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "first_name",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "last_name",
+        "type": "character varying(150)",
+        "required": true
+      },
+      {
+        "name": "is_staff",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "is_active",
+        "type": "boolean",
+        "required": true
+      },
+      {
+        "name": "date_joined",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "email",
+        "type": "character varying(254)",
+        "required": true
+      },
+      {
+        "name": "role",
+        "type": "character varying(12)",
+        "required": true
+      },
+      {
+        "name": "recovery_hash",
+        "type": "character varying(128)",
+        "required": true
+      },
+      {
+        "name": "totp_secret",
+        "type": "character varying(64)",
+        "required": true
+      },
+      {
+        "name": "totp_pending",
+        "type": "character varying(64)",
+        "required": true
+      },
+      {
+        "name": "totp_last_step",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "is_demo",
+        "type": "boolean",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_user_email_key",
+        "kind": "u",
+        "definition": "UNIQUE (email)",
+        "columns": [
+          "email"
+        ]
+      },
+      {
+        "name": "admissions_user_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_user_username_key",
+        "kind": "u",
+        "definition": "UNIQUE (username)",
+        "columns": [
+          "username"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> password, last_login, is_superuser, username, first_name, last_name, is_staff, is_active, date_joined, email, role, recovery_hash, totp_secret, totp_pending, totp_last_step, is_demo",
+    "candidate_keys": [
+      [
+        "email"
+      ],
+      [
+        "id"
+      ],
+      [
+        "username"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "email"
+        ],
+        "dependent": [
+          "id",
+          "password",
+          "last_login",
+          "is_superuser",
+          "username",
+          "first_name",
+          "last_name",
+          "is_staff",
+          "is_active",
+          "date_joined",
+          "role",
+          "recovery_hash",
+          "totp_secret",
+          "totp_pending",
+          "totp_last_step",
+          "is_demo"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "password",
+          "last_login",
+          "is_superuser",
+          "username",
+          "first_name",
+          "last_name",
+          "is_staff",
+          "is_active",
+          "date_joined",
+          "email",
+          "role",
+          "recovery_hash",
+          "totp_secret",
+          "totp_pending",
+          "totp_last_step",
+          "is_demo"
+        ]
+      },
+      {
+        "determinant": [
+          "username"
+        ],
+        "dependent": [
+          "id",
+          "password",
+          "last_login",
+          "is_superuser",
+          "first_name",
+          "last_name",
+          "is_staff",
+          "is_active",
+          "date_joined",
+          "email",
+          "role",
+          "recovery_hash",
+          "totp_secret",
+          "totp_pending",
+          "totp_last_step",
+          "is_demo"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "password"
+        ],
+        [
+          "id",
+          "last_login"
+        ],
+        [
+          "id",
+          "is_superuser"
+        ],
+        [
+          "id",
+          "username"
+        ],
+        [
+          "id",
+          "first_name"
+        ],
+        [
+          "id",
+          "last_name"
+        ],
+        [
+          "id",
+          "is_staff"
+        ],
+        [
+          "id",
+          "is_active"
+        ],
+        [
+          "id",
+          "date_joined"
+        ],
+        [
+          "id",
+          "email"
+        ],
+        [
+          "id",
+          "role"
+        ],
+        [
+          "id",
+          "recovery_hash"
+        ],
+        [
+          "id",
+          "totp_secret"
+        ],
+        [
+          "id",
+          "totp_pending"
+        ],
+        [
+          "id",
+          "totp_last_step"
+        ],
+        [
+          "id",
+          "is_demo"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_user_groups",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "group_id",
+        "type": "integer",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_user_groups_group_id_6b06e31d_fk_auth_group_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "group_id"
+        ]
+      },
+      {
+        "name": "admissions_user_groups_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_user_groups_user_id_aed6aad0_fk_admissions_user_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      },
+      {
+        "name": "admissions_user_groups_user_id_group_id_23dc7cd2_uniq",
+        "kind": "u",
+        "definition": "UNIQUE (user_id, group_id)",
+        "columns": [
+          "user_id",
+          "group_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> user_id, group_id",
+    "candidate_keys": [
+      [
+        "id"
+      ],
+      [
+        "user_id",
+        "group_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "user_id",
+          "group_id"
+        ]
+      },
+      {
+        "determinant": [
+          "user_id",
+          "group_id"
+        ],
+        "dependent": [
+          "id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "user_id"
+        ],
+        [
+          "id",
+          "group_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "admissions_user_user_permissions",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "user_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "permission_id",
+        "type": "integer",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "admissions_user_user_per_user_id_permission_id_7fbb6cb6_uniq",
+        "kind": "u",
+        "definition": "UNIQUE (user_id, permission_id)",
+        "columns": [
+          "user_id",
+          "permission_id"
+        ]
+      },
+      {
+        "name": "admissions_user_user_permission_id_a9dcc3a5_fk_auth_perm",
+        "kind": "f",
+        "definition": "FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "permission_id"
+        ]
+      },
+      {
+        "name": "admissions_user_user_permissions_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      },
+      {
+        "name": "admissions_user_user_user_id_72e2bd75_fk_admission",
+        "kind": "f",
+        "definition": "FOREIGN KEY (user_id) REFERENCES admissions_user(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "user_id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> user_id, permission_id",
+    "candidate_keys": [
+      [
+        "user_id",
+        "permission_id"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "user_id",
+          "permission_id"
+        ],
+        "dependent": [
+          "id"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "user_id",
+          "permission_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "user_id"
+        ],
+        [
+          "id",
+          "permission_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "auth_group",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(150)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "auth_group_name_key",
+        "kind": "u",
+        "definition": "UNIQUE (name)",
+        "columns": [
+          "name"
+        ]
+      },
+      {
+        "name": "auth_group_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "technical",
+    "fd": "id -> name",
+    "candidate_keys": [
+      [
+        "name"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "name"
+        ],
+        "dependent": [
+          "id"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "name"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "name"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "auth_group_permissions",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "group_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "permission_id",
+        "type": "integer",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "auth_group_permissio_permission_id_84c5c92e_fk_auth_perm",
+        "kind": "f",
+        "definition": "FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "permission_id"
+        ]
+      },
+      {
+        "name": "auth_group_permissions_group_id_b120cbf9_fk_auth_group_id",
+        "kind": "f",
+        "definition": "FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "group_id"
+        ]
+      },
+      {
+        "name": "auth_group_permissions_group_id_permission_id_0cd325b0_uniq",
+        "kind": "u",
+        "definition": "UNIQUE (group_id, permission_id)",
+        "columns": [
+          "group_id",
+          "permission_id"
+        ]
+      },
+      {
+        "name": "auth_group_permissions_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "technical",
+    "fd": "id -> group_id, permission_id",
+    "candidate_keys": [
+      [
+        "group_id",
+        "permission_id"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "group_id",
+          "permission_id"
+        ],
+        "dependent": [
+          "id"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "group_id",
+          "permission_id"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "group_id"
+        ],
+        [
+          "id",
+          "permission_id"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "auth_permission",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(255)",
+        "required": true
+      },
+      {
+        "name": "content_type_id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "codename",
+        "type": "character varying(100)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "auth_permission_content_type_id_2f476e4b_fk_django_co",
+        "kind": "f",
+        "definition": "FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED",
+        "columns": [
+          "content_type_id"
+        ]
+      },
+      {
+        "name": "auth_permission_content_type_id_codename_01ab375a_uniq",
+        "kind": "u",
+        "definition": "UNIQUE (content_type_id, codename)",
+        "columns": [
+          "content_type_id",
+          "codename"
+        ]
+      },
+      {
+        "name": "auth_permission_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "technical",
+    "fd": "id -> name, content_type_id, codename",
+    "candidate_keys": [
+      [
+        "content_type_id",
+        "codename"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "content_type_id",
+          "codename"
+        ],
+        "dependent": [
+          "id",
+          "name"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "name",
+          "content_type_id",
+          "codename"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "name"
+        ],
+        [
+          "id",
+          "content_type_id"
+        ],
+        [
+          "id",
+          "codename"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "django_content_type",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "integer",
+        "required": true
+      },
+      {
+        "name": "app_label",
+        "type": "character varying(100)",
+        "required": true
+      },
+      {
+        "name": "model",
+        "type": "character varying(100)",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "django_content_type_app_label_model_76bd3d3b_uniq",
+        "kind": "u",
+        "definition": "UNIQUE (app_label, model)",
+        "columns": [
+          "app_label",
+          "model"
+        ]
+      },
+      {
+        "name": "django_content_type_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "technical",
+    "fd": "id -> app_label, model",
+    "candidate_keys": [
+      [
+        "app_label",
+        "model"
+      ],
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "app_label",
+          "model"
+        ],
+        "dependent": [
+          "id"
+        ]
+      },
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "app_label",
+          "model"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "app_label"
+        ],
+        [
+          "id",
+          "model"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "django_migrations",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "app",
+        "type": "character varying(255)",
+        "required": true
+      },
+      {
+        "name": "name",
+        "type": "character varying(255)",
+        "required": true
+      },
+      {
+        "name": "applied",
+        "type": "timestamp with time zone",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "django_migrations_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "technical",
+    "fd": "id -> app, name, applied",
+    "candidate_keys": [
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "app",
+          "name",
+          "applied"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "app"
+        ],
+        [
+          "id",
+          "name"
+        ],
+        [
+          "id",
+          "applied"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "pk_offer_stats",
+    "key": "offer_id",
+    "columns": [
+      {
+        "name": "offer_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "applications",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "verified",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "confirmed",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "pk_offer_stats_offer_id_fkey",
+        "kind": "f",
+        "definition": "FOREIGN KEY (offer_id) REFERENCES admissions_offer(id)",
+        "columns": [
+          "offer_id"
+        ]
+      },
+      {
+        "name": "pk_offer_stats_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (offer_id)",
+        "columns": [
+          "offer_id"
+        ]
+      }
+    ],
+    "category": "derived",
+    "fd": "offer_id -> applications, verified, confirmed",
+    "candidate_keys": [
+      [
+        "offer_id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "offer_id"
+        ],
+        "dependent": [
+          "applications",
+          "verified",
+          "confirmed"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "offer_id"
+      ],
+      "facts": [
+        [
+          "offer_id",
+          "applications"
+        ],
+        [
+          "offer_id",
+          "verified"
+        ],
+        [
+          "offer_id",
+          "confirmed"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "pk_row_audit",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "occurred_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "transaction_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "db_actor",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "operation",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "application_id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "before_state",
+        "type": "jsonb",
+        "required": false
+      },
+      {
+        "name": "after_state",
+        "type": "jsonb",
+        "required": false
+      }
+    ],
+    "constraints": [
+      {
+        "name": "pk_row_audit_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> occurred_at, transaction_id, db_actor, operation, application_id, before_state, after_state",
+    "candidate_keys": [
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "occurred_at",
+          "transaction_id",
+          "db_actor",
+          "operation",
+          "application_id",
+          "before_state",
+          "after_state"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "occurred_at"
+        ],
+        [
+          "id",
+          "transaction_id"
+        ],
+        [
+          "id",
+          "db_actor"
+        ],
+        [
+          "id",
+          "operation"
+        ],
+        [
+          "id",
+          "application_id"
+        ],
+        [
+          "id",
+          "before_state"
+        ],
+        [
+          "id",
+          "after_state"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  },
+  {
+    "table": "pk_statement_audit",
+    "key": "id",
+    "columns": [
+      {
+        "name": "id",
+        "type": "bigint",
+        "required": true
+      },
+      {
+        "name": "occurred_at",
+        "type": "timestamp with time zone",
+        "required": true
+      },
+      {
+        "name": "operation",
+        "type": "text",
+        "required": true
+      },
+      {
+        "name": "affected_rows",
+        "type": "bigint",
+        "required": true
+      }
+    ],
+    "constraints": [
+      {
+        "name": "pk_statement_audit_pkey",
+        "kind": "p",
+        "definition": "PRIMARY KEY (id)",
+        "columns": [
+          "id"
+        ]
+      }
+    ],
+    "category": "operational",
+    "fd": "id -> occurred_at, operation, affected_rows",
+    "candidate_keys": [
+      [
+        "id"
+      ]
+    ],
+    "conditional_unique_keys": [],
+    "functional_dependencies": [
+      {
+        "determinant": [
+          "id"
+        ],
+        "dependent": [
+          "occurred_at",
+          "operation",
+          "affected_rows"
+        ]
+      }
+    ],
+    "reference_6nf": {
+      "anchor": [
+        "id"
+      ],
+      "facts": [
+        [
+          "id",
+          "occurred_at"
+        ],
+        [
+          "id",
+          "operation"
+        ],
+        [
+          "id",
+          "affected_rows"
+        ]
+      ],
+      "lossless_basis": "Each intersection is the primary key; an existence anchor preserves rows with absent optional facts.",
+      "constraint_preservation": "Alternative keys and multi-column CHECK constraints apply to the reconstructed relation; the reference schema is read-only.",
+      "dependency_scope": "Declared keys and domain dependencies; no FD inferred merely from sample equality."
+    }
+  }
+]

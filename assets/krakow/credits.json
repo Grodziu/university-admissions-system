@@ -1,0 +1,44 @@
+{
+  "panorama": {
+    "author": "Andrzej Otrębski",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Krakow_zakole_Wisly_panorama.jpg"
+  },
+  "wawel": {
+    "author": "Lessormore",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Wawel_(external_courtyard)_01.jpg"
+  },
+  "rynek": {
+    "author": "MarcinGorski4321",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Stary_rynek_w_Krakowie_z_wie%C5%BCy_ko%C5%9Bcio%C5%82a_Mariackiego.jpg"
+  },
+  "kazimierz": {
+    "author": "Zygmunt Put",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Szeroka_street,_Eastern_frontage,_Kazimierz,_Krak%C3%B3w,_Poland.jpg"
+  },
+  "bulwary": {
+    "author": "Mateusz Giełczyński",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nadwi%C5%9Bla%C5%84ska,_Bulwar_Podolski_i_K%C5%82adka_Ojca_Bernatka.jpg"
+  },
+  "zakrzowek": {
+    "author": "Jakub Hałun",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Zalew_Zakrz%C3%B3wek_w_Krakowie,_20230910_0846_0774.jpg"
+  },
+  "kopiec": {
+    "author": "Jakub Hałun",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Widok_na_Krak%C3%B3w_z_Kopca_Krakusa,_20230411_1438_3407.jpg"
+  }
+}

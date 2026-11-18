@@ -1,0 +1,28 @@
+@startuml
+title Rzeczywiste klasy reguł punktacji (admissions/domain.py)
+skinparam classAttributeIconSize 0
+abstract class AdmissionStrategy {
+  {abstract} calculate(data: dict): Result
+}
+class BachelorStrategy {
+  calculate(data: dict): Result
+}
+class MasterStrategy {
+  calculate(data: dict): Result
+}
+class PostgraduateStrategy {
+  calculate(data: dict): Result
+}
+class Result <<frozen dataclass>> {
+  score: Decimal | None
+  explanation: dict
+}
+class RuleError <<ValueError>>
+AdmissionStrategy <|-- BachelorStrategy
+AdmissionStrategy <|-- MasterStrategy
+AdmissionStrategy <|-- PostgraduateStrategy
+AdmissionStrategy ..> Result : zwraca
+BachelorStrategy ..> RuleError : walidacja
+MasterStrategy ..> RuleError
+PostgraduateStrategy ..> RuleError
+@enduml

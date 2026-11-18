@@ -1,0 +1,367 @@
+erDiagram
+    admissions_academicaverage {
+        bigint user_id PK
+        numeric_4_2 value
+    }
+    admissions_user ||--o| admissions_academicaverage : "user_id"
+    admissions_allowedprofession {
+        bigint id PK
+        character_varying_80 name
+        bigint offer_id FK
+    }
+    admissions_offer ||--o{ admissions_allowedprofession : "offer_id"
+    admissions_allowedsubject {
+        bigint id PK
+        character_varying_80 subject
+        bigint offer_id FK
+    }
+    admissions_offer ||--o{ admissions_allowedsubject : "offer_id"
+    admissions_application {
+        bigint id PK
+        uuid public_id
+        character_varying_12 status
+        timestamp_with_time_zone created_at
+        timestamp_with_time_zone submitted_at
+        integer revision
+        jsonb input_snapshot
+        text feedback
+        boolean bonus_claimed
+        boolean bonus_approved
+        character_varying_12 portfolio_grade
+        boolean payment_approved
+        numeric_8_2 payment_amount
+        character_varying_500 portfolio_url
+        bigint candidate_id FK
+        bigint reviewed_by_id FK
+        bigint offer_id FK
+        bigint round_id FK
+        character_varying_40 bonus_category
+        smallint bonus_points
+        character_varying_40 student_number
+        timestamp_with_time_zone sworn_at
+        bigint oath_photo_id FK
+    }
+    admissions_user ||--o{ admissions_application : "candidate_id"
+    admissions_profilephoto |o--o{ admissions_application : "oath_photo_id"
+    admissions_user |o--o{ admissions_application : "reviewed_by_id"
+    admissions_offer ||--o{ admissions_application : "offer_id"
+    admissions_round ||--o{ admissions_application : "round_id"
+    admissions_auditevent {
+        bigint id PK
+        character_varying_80 action
+        character_varying_120 entity
+        jsonb details
+        timestamp_with_time_zone created_at
+        bigint actor_id FK
+    }
+    admissions_user |o--o{ admissions_auditevent : "actor_id"
+    admissions_campaign {
+        bigint id PK
+        character_varying_100 name
+        timestamp_with_time_zone start
+        timestamp_with_time_zone end
+        timestamp_with_time_zone demo_clock
+        boolean closed
+        character_varying_40 demo_scenario
+    }
+    admissions_candidateidentity {
+        bigint user_id PK
+        character_varying_11 pesel
+    }
+    admissions_user ||--o| admissions_candidateidentity : "user_id"
+    admissions_candidatenotificationaddress {
+        bigint user_id PK
+        character_varying_254 value
+    }
+    admissions_contactanchor ||--o| admissions_candidatenotificationaddress : "user_id"
+    admissions_candidatephone {
+        bigint user_id PK
+        character_varying_30 value
+    }
+    admissions_contactanchor ||--o| admissions_candidatephone : "user_id"
+    admissions_candidateportfolio {
+        bigint user_id PK
+        character_varying_500 value
+    }
+    admissions_contactanchor ||--o| admissions_candidateportfolio : "user_id"
+    admissions_contactanchor {
+        bigint user_id PK
+    }
+    admissions_user ||--o| admissions_contactanchor : "user_id"
+    admissions_diploma {
+        bigint user_id PK
+        character_varying_120 title
+    }
+    admissions_user ||--o| admissions_diploma : "user_id"
+    admissions_document {
+        bigint id PK
+        character_varying_16 kind
+        integer revision
+        character_varying_100 file
+        character_varying_200 original_name
+        character_varying_64 sha256
+        timestamp_with_time_zone uploaded_at
+        bigint application_id FK
+        bigint reused_from_id FK
+        bigint profile_source_id FK
+    }
+    admissions_application ||--o{ admissions_document : "application_id"
+    admissions_profiledocument |o--o{ admissions_document : "profile_source_id"
+    admissions_document |o--o{ admissions_document : "reused_from_id"
+    admissions_dormitory {
+        character_varying_4 code PK
+        character_varying_50 name
+        character_varying_150 address
+        text description
+        smallint seats
+        numeric_9_6 latitude
+        numeric_9_6 longitude
+    }
+    admissions_emaildelivery {
+        bigint id PK
+        character_varying_254 recipient
+        character_varying_10 state
+        smallint attempts
+        timestamp_with_time_zone available_at
+        bigint notification_id FK
+    }
+    admissions_notification ||--o| admissions_emaildelivery : "notification_id"
+    admissions_examresult {
+        bigint id PK
+        character_varying_80 subject
+        character_varying_12 level
+        numeric_5_2 value
+        bigint user_id FK
+    }
+    admissions_user ||--o{ admissions_examresult : "user_id"
+    admissions_faculty {
+        bigint id PK
+        character_varying_12 code
+        character_varying_150 name
+        character_varying_7 color
+    }
+    admissions_housingapplication {
+        bigint id PK
+        character_varying_12 status
+        numeric_7_2 distance_km
+        numeric_6_2 score_index
+        timestamp_with_time_zone submitted_at
+        character_varying_4 allocated_id FK
+        bigint campaign_id FK
+        bigint candidate_id FK
+        bigint enrollment_id FK
+        character_varying_4 preferred_id FK
+    }
+    admissions_dormitory |o--o{ admissions_housingapplication : "allocated_id"
+    admissions_campaign ||--o{ admissions_housingapplication : "campaign_id"
+    admissions_user ||--o{ admissions_housingapplication : "candidate_id"
+    admissions_application |o--o{ admissions_housingapplication : "enrollment_id"
+    admissions_dormitory ||--o{ admissions_housingapplication : "preferred_id"
+    admissions_notification {
+        bigint id PK
+        character_varying_150 title
+        text message
+        timestamp_with_time_zone created_at
+        boolean read
+        bigint user_id FK
+    }
+    admissions_user ||--o{ admissions_notification : "user_id"
+    admissions_offer {
+        bigint id PK
+        character_varying_2 degree
+        character_varying_2 mode
+        integer capacity
+        integer minimum
+        numeric_8_2 fee
+        boolean portfolio_required
+        boolean portfolio_bonus
+        character_varying_12 state
+        character_varying_30 rule_version
+        bigint campaign_id FK
+        bigint program_id FK
+        boolean photo_required
+        numeric_8_2 tuition_per_semester
+    }
+    admissions_campaign ||--o{ admissions_offer : "campaign_id"
+    admissions_program ||--o{ admissions_offer : "program_id"
+    admissions_profiledocument {
+        bigint id PK
+        character_varying_16 kind
+        integer version
+        character_varying_100 file
+        character_varying_200 original_name
+        character_varying_64 sha256
+        timestamp_with_time_zone uploaded_at
+        bigint user_id FK
+    }
+    admissions_user ||--o{ admissions_profiledocument : "user_id"
+    admissions_profilephoto {
+        bigint id PK
+        integer version
+        character_varying_100 file
+        character_varying_200 original_name
+        character_varying_64 sha256
+        timestamp_with_time_zone uploaded_at
+        timestamp_with_time_zone approved_at
+        bigint approved_by_id FK
+        bigint user_id FK
+    }
+    admissions_user |o--o{ admissions_profilephoto : "approved_by_id"
+    admissions_user ||--o{ admissions_profilephoto : "user_id"
+    admissions_program {
+        bigint id PK
+        character_varying_200 name
+        text description
+        character_varying_500 source
+        boolean illustrative
+        bigint faculty_id FK
+    }
+    admissions_faculty ||--o{ admissions_program : "faculty_id"
+    admissions_program_partner_faculties {
+        bigint id PK
+        bigint program_id FK
+        bigint faculty_id FK
+    }
+    admissions_faculty ||--o{ admissions_program_partner_faculties : "faculty_id"
+    admissions_program ||--o{ admissions_program_partner_faculties : "program_id"
+    admissions_publication {
+        bigint id PK
+        integer version
+        timestamp_with_time_zone published_at
+        text reason
+        numeric_8_2 cutoff
+        integer qualified_count
+        integer available_places
+        integer overflow
+        jsonb rule
+        bigint author_id FK
+        bigint offer_id FK
+        bigint round_id FK
+    }
+    admissions_user ||--o{ admissions_publication : "author_id"
+    admissions_offer ||--o{ admissions_publication : "offer_id"
+    admissions_round ||--o{ admissions_publication : "round_id"
+    admissions_rankingentry {
+        bigint id PK
+        integer rank
+        numeric_8_2 score
+        character_varying_12 decision
+        jsonb explanation
+        bigint application_id FK
+        bigint publication_id FK
+    }
+    admissions_application ||--o{ admissions_rankingentry : "application_id"
+    admissions_publication ||--o{ admissions_rankingentry : "publication_id"
+    admissions_residence {
+        bigint user_id PK
+        character_varying_100 city
+        character_varying_150 street
+        character_varying_20 building
+        character_varying_20 apartment
+        character_varying_6 postal_code
+        numeric_9_6 latitude
+        numeric_9_6 longitude
+    }
+    admissions_user ||--o| admissions_residence : "user_id"
+    admissions_round {
+        bigint id PK
+        character_varying_2 degree
+        smallint number
+        timestamp_with_time_zone start
+        timestamp_with_time_zone application_end
+        timestamp_with_time_zone end
+        bigint campaign_id FK
+    }
+    admissions_campaign ||--o{ admissions_round : "campaign_id"
+    admissions_session {
+        bigint id PK
+        character_varying_64 key_hash
+        timestamp_with_time_zone expires_at
+        bigint user_id FK
+    }
+    admissions_user ||--o{ admissions_session : "user_id"
+    admissions_user {
+        bigint id PK
+        character_varying_128 password
+        timestamp_with_time_zone last_login
+        boolean is_superuser
+        character_varying_150 username
+        character_varying_150 first_name
+        character_varying_150 last_name
+        boolean is_staff
+        boolean is_active
+        timestamp_with_time_zone date_joined
+        character_varying_254 email
+        character_varying_12 role
+        character_varying_128 recovery_hash
+        character_varying_64 totp_secret
+        character_varying_64 totp_pending
+        bigint totp_last_step
+        boolean is_demo
+    }
+    admissions_user_groups {
+        bigint id PK
+        bigint user_id FK
+        integer group_id FK
+    }
+    auth_group ||--o{ admissions_user_groups : "group_id"
+    admissions_user ||--o{ admissions_user_groups : "user_id"
+    admissions_user_user_permissions {
+        bigint id PK
+        bigint user_id FK
+        integer permission_id FK
+    }
+    auth_permission ||--o{ admissions_user_user_permissions : "permission_id"
+    admissions_user ||--o{ admissions_user_user_permissions : "user_id"
+    auth_group {
+        integer id PK
+        character_varying_150 name
+    }
+    auth_group_permissions {
+        bigint id PK
+        integer group_id FK
+        integer permission_id FK
+    }
+    auth_permission ||--o{ auth_group_permissions : "permission_id"
+    auth_group ||--o{ auth_group_permissions : "group_id"
+    auth_permission {
+        integer id PK
+        character_varying_255 name
+        integer content_type_id FK
+        character_varying_100 codename
+    }
+    django_content_type ||--o{ auth_permission : "content_type_id"
+    django_content_type {
+        integer id PK
+        character_varying_100 app_label
+        character_varying_100 model
+    }
+    django_migrations {
+        bigint id PK
+        character_varying_255 app
+        character_varying_255 name
+        timestamp_with_time_zone applied
+    }
+    pk_offer_stats {
+        bigint offer_id PK
+        bigint applications
+        bigint verified
+        bigint confirmed
+    }
+    admissions_offer ||--o| pk_offer_stats : "offer_id"
+    pk_row_audit {
+        bigint id PK
+        timestamp_with_time_zone occurred_at
+        bigint transaction_id
+        text db_actor
+        text operation
+        bigint application_id
+        jsonb before_state
+        jsonb after_state
+    }
+    pk_statement_audit {
+        bigint id PK
+        timestamp_with_time_zone occurred_at
+        text operation
+        bigint affected_rows
+    }

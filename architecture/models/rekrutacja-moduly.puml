@@ -1,0 +1,34 @@
+@startuml
+title Widok modułów — rzeczywiste pakiety
+top to bottom direction
+package "desktop — prezentacja" {
+  [app / pages / flows] as GUI
+  [profile_forms / dashboard / discover / krakow] as Pages
+  [client.py] as Client
+}
+package "admissions — API i przypadki użycia" {
+  [api / auth] as API
+  [services / profiles / offers / housing / mailing] as Services
+  [domain / policies / tuition] as Rules
+  [models / migrations] as Persistence
+}
+package "uruchomienie i eksploatacja" {
+  [start / portable / networking] as Host
+  [backups] as Copies
+  [database — pomiary i modele] as DBTools
+}
+GUI --> Pages
+Pages --> Client
+Client ..> API : kontrakt JSON, brak importów modeli do GUI
+API --> Services
+Services --> Rules
+Services --> Persistence
+Host --> API
+Host --> Persistence : migracje
+Copies --> Persistence : dump / restore
+DBTools --> Persistence : izolowane kopie i metadane
+note right of Rules
+  domain.py nie zależy od ORM ani Qt.
+  Testy obejmują osobno reguły i przebieg.
+end note
+@enduml

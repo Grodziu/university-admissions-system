@@ -1,0 +1,2 @@
+VERSION = '1.0'
+RELEASE = f'v{VERSION}'
